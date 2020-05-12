@@ -15,5 +15,5 @@ Rasmus - [@rasm211d](https://github.com/rasm211d)
 
 Emil - [@emilnymann](https://github.com/emilnymann)
 
-## Projektplan
-GitHub Projects, automation, reviews og issue tracking benyttes til projektplanlægning og håndtering. Alle pull requests skal reviewes inden de merges.
+## Projektstyring
+GitHub Projects, automation, reviews og issue tracking benyttes til projektstyring. Alle pull requests skal reviewes inden de merges.
