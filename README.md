@@ -6,6 +6,8 @@ Fra [visionsdokumentet](https://github.com/emilnymann/1AarsProjekt/blob/master/0
 
 > App’en giver kunden mulighed for at bestille tid udenom den ellers for virksomheden tidskrævende telefonbestilling og tillader kunden at give feedback på udførte øvelser, således, at behandleren inden næste møde ved hvilke ting der er gået godt og skidt.
 
+> App’en kan også sende og modtage beskeder mellem behandler og kunde, så der nemt og hurtigt kan kommunikeres.
+
 ## Bidragsydere
 Toke - [@ThunderGrove](https://github.com/ThunderGrove)
 
