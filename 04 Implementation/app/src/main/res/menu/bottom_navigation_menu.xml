@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:icon="@drawable/ic_chat_black_24dp"
+        android:title="@string/menu_beskeder" />
+    <item android:title="Placeholder" />
+    <item
+        android:icon="@drawable/ic_event_black_24dp"
+        android:title="@string/menu_kalender" />
+</menu>
