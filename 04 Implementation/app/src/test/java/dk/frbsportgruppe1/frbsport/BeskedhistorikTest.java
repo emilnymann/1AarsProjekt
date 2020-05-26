@@ -4,7 +4,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.LocalDateTime;
 
-public class VisBeskedhistorikTest {
+public class BeskedhistorikTest {
 
     @Test
     public void tc1_nyBeskedhistorik() {
