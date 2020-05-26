@@ -4,7 +4,9 @@
     <item
         android:icon="@drawable/ic_chat_black_24dp"
         android:title="@string/menu_beskeder" />
-    <item android:title="Placeholder" />
+    <item
+        android:icon="@drawable/ic_book_black_24dp"
+        android:title="@string/menu_booking" />
     <item
         android:icon="@drawable/ic_event_black_24dp"
         android:title="@string/menu_kalender" />
