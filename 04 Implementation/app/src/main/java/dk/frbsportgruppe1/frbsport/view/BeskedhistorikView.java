@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import dk.frbsportgruppe1.frbsport.R;
 
-public class Beskedhistorik extends AppCompatActivity {
+public class BeskedhistorikView extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
