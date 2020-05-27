@@ -9,3 +9,4 @@ public class PatientErNullException extends Exception{
         super(fejlBesked);
     }
 }
+
