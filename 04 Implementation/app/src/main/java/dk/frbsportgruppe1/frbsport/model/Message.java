@@ -2,11 +2,11 @@ package dk.frbsportgruppe1.frbsport.model;
 
 import java.time.LocalDateTime;
 
-import dk.frbsportgruppe1.frbsport.model.exceptions.AfsenderErNullException;
+import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
 
-public class Besked implements BeskedInterface{
+public class Message implements MessageInterface {
     private String tekst;
-    private Bruger afsender;
+    private User afsender;
     private LocalDateTime datotid;
     private boolean afsendt;
 
@@ -16,7 +16,7 @@ public class Besked implements BeskedInterface{
      * @param afsender er hvem der angiver teksten, så man kan se hvem der har sendt beskeden
      *                 i beskedhistorik.
      */
-    public Besked(String tekst, Bruger afsender) {
+    public Message(String tekst, User afsender) {
         this.tekst = tekst;
         this.afsender = afsender;
     }
@@ -24,17 +24,17 @@ public class Besked implements BeskedInterface{
     /**
      * Dette er en no-arg constructor da vi skal kunne lave et objekt uden at give den parametre
      */
-    public Besked() {
+    public Message() {
     }
 
     /**
      * metoden sætter teksten på klassevariablen tekst til den String der er angivet i metodesignaturen
-     * @param tekst er en string som brugeren af appen angiver. Den tekst håndteres længere oppe i systemet,
+     * @param text er en string som brugeren af appen angiver. Den tekst håndteres længere oppe i systemet,
      *              den sendes igennem systemet til denne metode.
      */
     @Override
-    public void saetTekst(String tekst) {
-        this.tekst = tekst;
+    public void setText(String text) {
+        this.tekst = text;
     }
 
     /**
@@ -42,22 +42,22 @@ public class Besked implements BeskedInterface{
      * @return tekst returneres
      */
     @Override
-    public String hentTekst() {
+    public String getText() {
         return tekst;
     }
 
     /**
      * klassevariablen afsender sættes i denne metode.
-     * @param afsender afsender er af Typen bruger. Bruger kan både være en patient
+     * @param sender afsender er af Typen bruger. User kan både være en patient
      *                 eller en behandler. afsenderen angives da man skal se hvem der har
-     * @throws AfsenderErNullException
+     * @throws SenderIsNullException
      */
     @Override
-    public void saetAfsender(Bruger afsender) throws AfsenderErNullException {
-        if (afsender == null) {
-            throw new AfsenderErNullException("Beskeden kunne ikke sendes");
+    public void setSender(User sender) throws SenderIsNullException {
+        if (sender == null) {
+            throw new SenderIsNullException("Beskeden kunne ikke sendes");
         } else {
-            this.afsender = afsender;
+            this.afsender = sender;
         }
 
     }
@@ -67,7 +67,7 @@ public class Besked implements BeskedInterface{
      * @return afsender
      */
     @Override
-    public Bruger hentAfsender() {
+    public User getSender() {
         return afsender;
     }
 
@@ -76,7 +76,7 @@ public class Besked implements BeskedInterface{
      * @param datotid bruges til at sortere beskeder efter dato. Brugerene skal se beskederne i den rigtige rækkefølge.
      */
     @Override
-    public void saetDatotid(LocalDateTime datotid) {
+    public void setDateTime(LocalDateTime datotid) {
         this.datotid = datotid;
     }
 
@@ -85,7 +85,7 @@ public class Besked implements BeskedInterface{
      * @return datotid til brug af sortering
      */
     @Override
-    public LocalDateTime hentDatotid() {
+    public LocalDateTime getDateTime() {
         return datotid;
     }
 

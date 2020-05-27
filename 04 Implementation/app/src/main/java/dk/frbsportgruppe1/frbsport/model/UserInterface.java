@@ -1,4 +1,4 @@
 package dk.frbsportgruppe1.frbsport.model;
 
-public interface BrugerInterface {
+public interface UserInterface {
 }

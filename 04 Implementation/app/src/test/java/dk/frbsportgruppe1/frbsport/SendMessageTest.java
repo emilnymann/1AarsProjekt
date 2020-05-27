@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.LocalDateTime;
 
-public class SendBeskedTest {
+public class SendMessageTest {
 
     /**
      * Denne test udføres på UI'et fordi vi kaster exceptions før
