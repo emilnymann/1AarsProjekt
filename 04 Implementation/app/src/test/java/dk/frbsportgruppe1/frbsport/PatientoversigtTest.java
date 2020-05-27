@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
-public class VisPatientoversigtTest{
+public class PatientoversigtTest {
 
     @Test
     public void visPatientoversigtTcOne(){
