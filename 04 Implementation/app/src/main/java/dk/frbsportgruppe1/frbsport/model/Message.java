@@ -5,20 +5,20 @@ import java.time.LocalDateTime;
 import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
 
 public class Message implements MessageInterface {
-    private String tekst;
-    private User afsender;
-    private LocalDateTime datotid;
-    private boolean afsendt;
+    private String text;
+    private User sender;
+    private LocalDateTime dateTime;
+    private boolean sent;
 
     /**
-     * Constructoren sætter parametrene tekst og afsender.
-     * @param tekst er den tekst der bliver lagt ind i vores beskedhistorik
-     * @param afsender er hvem der angiver teksten, så man kan se hvem der har sendt beskeden
+     * Constructoren sætter parametrene text og sender.
+     * @param text er den tekst der bliver lagt ind i vores beskedhistorik
+     * @param sender er hvem der angiver teksten, så man kan se hvem der har sendt beskeden
      *                 i beskedhistorik.
      */
-    public Message(String tekst, User afsender) {
-        this.tekst = tekst;
-        this.afsender = afsender;
+    public Message(String text, User sender) {
+        this.text = text;
+        this.sender = sender;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Message implements MessageInterface {
      */
     @Override
     public void setText(String text) {
-        this.tekst = text;
+        this.text = text;
     }
 
     /**
@@ -43,11 +43,11 @@ public class Message implements MessageInterface {
      */
     @Override
     public String getText() {
-        return tekst;
+        return text;
     }
 
     /**
-     * klassevariablen afsender sættes i denne metode.
+     * klassevariablen sender sættes i denne metode.
      * @param sender afsender er af Typen bruger. User kan både være en patient
      *                 eller en behandler. afsenderen angives da man skal se hvem der har
      * @throws SenderIsNullException
@@ -57,36 +57,36 @@ public class Message implements MessageInterface {
         if (sender == null) {
             throw new SenderIsNullException("Beskeden kunne ikke sendes");
         } else {
-            this.afsender = sender;
+            this.sender = sender;
         }
 
     }
 
     /**
-     * metoden returnere afsender
-     * @return afsender
+     * metoden returnerer sender
+     * @return sender
      */
     @Override
     public User getSender() {
-        return afsender;
+        return sender;
     }
 
     /**
-     * Metoden sætter klassevariablen Datotid til en angivet datotid.
-     * @param datotid bruges til at sortere beskeder efter dato. Brugerene skal se beskederne i den rigtige rækkefølge.
+     * Metoden sætter klassevariablen Localdatetime til en angivet dateTime.
+     * @param dateTime bruges til at sortere beskeder efter dato. Brugerene skal se beskederne i den rigtige rækkefølge.
      */
     @Override
-    public void setDateTime(LocalDateTime datotid) {
-        this.datotid = datotid;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     /**
-     * Metoden returnere datotid som skal bruges til sortering.
+     * Metoden returnerer datotid som skal bruges til sortering.
      * @return datotid til brug af sortering
      */
     @Override
     public LocalDateTime getDateTime() {
-        return datotid;
+        return dateTime;
     }
 
 

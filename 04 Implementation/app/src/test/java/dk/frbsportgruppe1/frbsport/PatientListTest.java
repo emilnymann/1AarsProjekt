@@ -4,12 +4,13 @@ package dk.frbsportgruppe1.frbsport;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
+import dk.frbsportgruppe1.frbsport.model.Patient;
 import dk.frbsportgruppe1.frbsport.model.PatientList;
 import dk.frbsportgruppe1.frbsport.model.Practicioner;
 
 import static org.junit.Assert.*;
 
-public class PatientOverviewTest {
+public class PatientListTest {
 
     @Test
     public void visPatientListTcOne(){
