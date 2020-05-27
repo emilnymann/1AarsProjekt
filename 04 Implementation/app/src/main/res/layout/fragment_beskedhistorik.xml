@@ -2,9 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/beskedhistorikConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.BeskedhistorikView">
+    android:background="@color/design_default_color_background"
+    tools:context=".view.BeskedhistorikFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,7 +57,7 @@
         app:helperTextEnabled="false"
         app:hintAnimationEnabled="true"
         app:hintEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -65,18 +67,5 @@
             android:inputType="textShortMessage"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        style="@style/Widget.MaterialComponents.BottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:labelVisibilityMode="selected"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu">
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
