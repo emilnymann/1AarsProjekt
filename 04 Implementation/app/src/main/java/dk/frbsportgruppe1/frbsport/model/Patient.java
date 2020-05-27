@@ -1,17 +1,17 @@
 package dk.frbsportgruppe1.frbsport.model;
 
-public class Patient extends Bruger implements PatientInterface {
-    private String navn;
+public class Patient extends User implements PatientInterface {
+    private String name;
 
-    public Patient(String navn){
-        this.navn = navn;
+    public Patient(String name){
+        this.name = name;
     }
 
-    public void saetNavn(String navn) {
-        this.navn = navn;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String hentNavn() {
-        return navn;
+    public String getName() {
+        return name;
     }
 }
