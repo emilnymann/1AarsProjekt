@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import dk.frbsportgruppe1.frbsport.model.exceptions.PracticionerIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.PatientIsNullException;
 
-public class PatientList implements PatientListInterface {
+public class PatientIndex implements PatientIndexInterface {
     private Practicioner practicioner;
     private ArrayList<Patient> patients = new ArrayList<Patient>();
 
     /**
-    * @param b er den practicioner patientoversigten er forbundet til.
+    * @param practicioner er den practicioner patientoversigten er forbundet til.
     * @throws PracticionerIsNullException bliver udløst hvis denne method bilver kaldt unden en practicioner.
     */
-    public void setPracticioner(Practicioner b) throws PracticionerIsNullException {
-        if(b!=null){
-            practicioner =b;
+    public void setPracticioner(Practicioner practicioner) throws PracticionerIsNullException {
+        if(practicioner!=null){
+            this.practicioner = practicioner;
         }else{
             throw new PracticionerIsNullException("Behandler er null");
         }
@@ -27,12 +27,12 @@ public class PatientList implements PatientListInterface {
     }
 
     /**
-    * @param p er den patient som skal tilføjes til patientoversigten.
+    * @param patient er den patient som skal tilføjes til patientoversigten.
     * @throws PatientIsNullException bliver udløst hvis denne method bilver kaldt unden en patient.
     */
-    public void addPatient(Patient p) throws PatientIsNullException {
-        if(p!=null){
-            patients.add(p);
+    public void addPatient(Patient patient) throws PatientIsNullException {
+        if(patient!=null){
+            patients.add(patient);
         }else{
             throw new PatientIsNullException("Patient er null");
         }

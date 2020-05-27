@@ -8,7 +8,7 @@ import dk.frbsportgruppe1.frbsport.model.exceptions.PatientIsNullException;
 /**
 * Interface til OC0102 PatientList
 */
-public interface PatientListInterface {
+public interface PatientIndexInterface {
     public void setPracticioner(Practicioner practicioner) throws PracticionerIsNullException;
     public void addPatient(Patient patient) throws PatientIsNullException;
     public ArrayList<Patient> getPatients();

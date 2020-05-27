@@ -5,33 +5,31 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 
 import dk.frbsportgruppe1.frbsport.model.Patient;
-import dk.frbsportgruppe1.frbsport.model.PatientList;
+import dk.frbsportgruppe1.frbsport.model.PatientIndex;
 import dk.frbsportgruppe1.frbsport.model.Practicioner;
 
-import static org.junit.Assert.*;
-
-public class PatientListTest {
+public class PatientIndexTest {
 
     @Test
     public void visPatientListTcOne(){
-        PatientList patientList=new PatientList();
+        PatientIndex patientIndex =new PatientIndex();
         Practicioner practicioner=new Practicioner("Christian Iuul");
-        patientList.setPracticioner(practicioner);
-        assertEquals(0,patientList.patientSize,"PatientList.patientSize gav andet end 0 når det burde være 0 når der ingen patienter er.");
+        patientIndex.setPracticioner(practicioner);
+        assertEquals(0, patientIndex.patientSize,"PatientList.patientSize gav andet end 0 når det burde være 0 når der ingen patienter er.");
     }
 
     @Test
     public void visPatientListTcTwo(){
-        PatientList po=new PatientList();
+        PatientIndex po=new PatientIndex();
         Practicioner b=new Practicioner(1,"Christian Luul");
         po.saetPracticioner(b);
-        po.tilfoej(new Patient(2,"Tom Jensen",b));
+        po.addPatient("Tom Jensen");
         assertEquals(1,po.patientSize,"PatientList.patientSize gav andet end 1 når det burde være 1 når der er en patienter.");
     }
 
     @Test(expected = PatientErNullException.class)
     public void visPatientListTcThree(){
-        PatientList po=new PatientList();
+        PatientIndex po=new PatientIndex();
         Practicioner b=new Practicioner(1,"Christian Luul");
         po.saetPracticioner(b);
         po.tilfoej(null);
@@ -39,7 +37,7 @@ public class PatientListTest {
 
     @Test(expected = PracticionerErNullException.class)
     public void visPatientListTcFour(){
-        PatientList po=new PatientList();
+        PatientIndex po=new PatientIndex();
         Practicioner b=new Practicioner(1,"Christian Luul");
         po.saetPracticioner(null);
         po.tilfoej(new Patient(2,"Tom Jensen",b));
@@ -55,7 +53,7 @@ public class PatientListTest {
 
     @Test
     public void visPatientListTcSix(){
-        PatientList po=new PatientList();
+        PatientIndex po=new PatientIndex();
         Practicioner b=new Practicioner(1,"Christian Luul");
         po.saetPracticioner(b);
         Patient pEt=new Patient(2,"Tom Jensen",b);

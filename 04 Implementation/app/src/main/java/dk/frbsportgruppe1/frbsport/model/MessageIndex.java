@@ -6,17 +6,17 @@ import java.util.Observable;
 import dk.frbsportgruppe1.frbsport.model.exceptions.MessageIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.PatientIsNullException;
 
-public class MessageHistory extends Observable implements MessageHistoryInterface {
+public class MessageIndex extends Observable implements MessageIndexInterface {
 
 
-    private ArrayList<Message> beskeder = new ArrayList<>();
+    private ArrayList<Message> messages = new ArrayList<>();
     private Patient patient;
 
     /**
             * Beskedhistorikken er bundet til en patient, denne patient sættes i constructoren.
             * @param patient er den der binder beskedhistorikken mellem patient og behandler
      */
-    public MessageHistory(Patient patient) throws PatientIsNullException {
+    public MessageIndex(Patient patient) throws PatientIsNullException {
         if (patient == null) {
             throw new PatientIsNullException("Beskeden kunne ikke sendes");
         } else {
@@ -40,20 +40,20 @@ public class MessageHistory extends Observable implements MessageHistoryInterfac
         if (message == null) {
             throw new MessageIsNullException("Beskeden kan ikke sendes");
         } else {
-            beskeder.add(message);
+            messages.add(message);
         }
     }
 
-    public void saetBeskeder(ArrayList<Message> beskeder) {
-        this.beskeder = beskeder;
+    public void setMessage(ArrayList<Message> messages) {
+        this.messages = messages;
     }
 
     public ArrayList<Message> getMessages() {
-        beskeder.sort(new SortMessages());
-        return beskeder;
+        messages.sort(new SortMessages());
+        return messages;
     }
 
-    public void saetPatient(Patient patient) {
+    public void setPatient(Patient patient) {
         this.patient = patient;
     }
 
