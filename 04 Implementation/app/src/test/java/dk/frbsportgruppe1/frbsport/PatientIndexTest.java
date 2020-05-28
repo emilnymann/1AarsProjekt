@@ -4,6 +4,7 @@ package dk.frbsportgruppe1.frbsport;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import dk.frbsportgruppe1.frbsport.model.Message;
 import dk.frbsportgruppe1.frbsport.model.Patient;
@@ -62,11 +63,12 @@ public class PatientIndexTest{
         PatientIndex patientIndex=new PatientIndex();
         Practicioner practicioner=new Practicioner("Christian Iuul");
         patientIndex.setPracticioner(practicioner);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         //Patient 1
         Patient p1=new Patient("Tom Jensen",practicioner);
         Message msg1=new Message("Hej Christian",p1);
-        LocalDateTime ldt1=LocalDateTime.parse("2020-02-22 13:37:00");
+        LocalDateTime ldt1=LocalDateTime.parse("2020-02-22 13:37:01",formatter);
         msg1.setDateTime(ldt1);
         p1.addMessage(msg1);
         patientIndex.addPatient(p1);
@@ -74,13 +76,13 @@ public class PatientIndexTest{
         //Patient 2
         Patient p2=new Patient("Preben Hansen",practicioner);
         Message msg2=new Message("Hej Iuul",p2);
-        LocalDateTime ldt2=LocalDateTime.parse("2020-02-23 14:10:15");
+        LocalDateTime ldt2=LocalDateTime.parse("2020-02-23 14:10:15",formatter);
         msg2.setDateTime(ldt2);
         p2.addMessage(msg2);
         patientIndex.addPatient(p2);
 
         assertEquals("PatientList.patientSize gav andet end 2 når det burde være 2 når der er to patienter.",2,patientIndex.patientSize());
-        assertEquals("2020-02-22 13:37:00",patientIndex.getPatient(0).getMessages().get(0).getDateTime(),"Kunne ikke få den rigtige tidsstempel på besked 0 hos patient et");
-        assertEquals("2020-02-23 14:10:15",patientIndex.getPatient(1).getMessages().get(0).getDateTime(),"Kunne ikke få den rigtige tidsstempel på besked 0 hos patient to");
+        assertEquals("Kunne ikke få den rigtige tidsstempel på besked 0 hos patient et","2020-02-22T13:37:01",patientIndex.getPatient(0).getMessages().get(0).getDateTime().toString());
+        assertEquals("Kunne ikke få den rigtige tidsstempel på besked 0 hos patient to","2020-02-23T14:10:15",patientIndex.getPatient(1).getMessages().get(0).getDateTime().toString());
     }
 }
