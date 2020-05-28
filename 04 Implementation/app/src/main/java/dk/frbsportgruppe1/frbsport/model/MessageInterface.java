@@ -2,6 +2,7 @@ package dk.frbsportgruppe1.frbsport.model;
 
 import java.time.LocalDateTime;
 
+import dk.frbsportgruppe1.frbsport.model.exceptions.DateIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
 
 /**
@@ -43,12 +44,19 @@ public interface MessageInterface {
      * @param localDateTime Vi bruger LocalDateTime klassen, da en Message skal tilknyttes
      *                      et tidspunkt så man kan se hvornår den er sendt.
      */
-    void setDateTime(LocalDateTime localDateTime);
+    void setDateTime(LocalDateTime localDateTime) throws DateIsNullException;
 
     /**
      * Denne metode bliver implementeret i besked klassen og udfyldes der.
      * @return da datotid skal bruges skal den returneres, så en anden klasse kan arbejde datotid.
      */
     LocalDateTime getDateTime();
+
+    /**
+     *
+     */
+    public boolean isSent();
+
+    public void setSent(boolean sent);
 
 }
