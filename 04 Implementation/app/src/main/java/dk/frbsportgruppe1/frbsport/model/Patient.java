@@ -1,17 +1,32 @@
 package dk.frbsportgruppe1.frbsport.model;
 
-public class Patient extends User implements PatientInterface {
-    private String name;
+import java.util.ArrayList;
 
-    public Patient(String name){
-        this.name = name;
+import dk.frbsportgruppe1.frbsport.model.exceptions.MessageIsNullException;
+import dk.frbsportgruppe1.frbsport.model.exceptions.PatientIsNullException;
+
+public class Patient extends User implements PatientInterface{
+    private Practicioner practicioner;
+    private MessageIndex messageIndex=new MessageIndex(this);
+
+    public Patient(String name,Practicioner practicioner) throws PatientIsNullException{
+        super(name);
+        this.practicioner=practicioner;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPracticioner(Practicioner practicioner) {
+        this.practicioner=practicioner;
     }
 
-    public String getName() {
-        return name;
+    public Practicioner getPracticioner(){
+        return practicioner;
+    }
+
+    public void addMessage(Message msg) throws MessageIsNullException{
+        messageIndex.addMessage(msg);
+    }
+
+    public ArrayList<Message> getMessages(){
+        return messageIndex.getMessages();
     }
 }
