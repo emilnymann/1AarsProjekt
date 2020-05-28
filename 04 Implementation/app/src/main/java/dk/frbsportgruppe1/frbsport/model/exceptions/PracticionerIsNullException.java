@@ -5,7 +5,7 @@ package dk.frbsportgruppe1.frbsport.model.exceptions;
  * Udvider Exception for test kan gribe fejlen.
  */
 public class PracticionerIsNullException extends Exception{
-    public PracticionerIsNullException(String fejlBesked){
-        super(fejlBesked);
+    public PracticionerIsNullException(String errorMessage){
+        super(errorMessage);
     }
 }
