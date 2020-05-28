@@ -9,7 +9,9 @@ import java.util.Observer;
 import dk.frbsportgruppe1.frbsport.model.Message;
 import dk.frbsportgruppe1.frbsport.model.MessageIndex;
 import dk.frbsportgruppe1.frbsport.model.Patient;
+import dk.frbsportgruppe1.frbsport.model.Practicioner;
 import dk.frbsportgruppe1.frbsport.model.exceptions.MessageIsNullException;
+import dk.frbsportgruppe1.frbsport.model.exceptions.PatientIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
 
 public class MessageRepository implements Observer {
@@ -26,9 +28,11 @@ public class MessageRepository implements Observer {
     public void populateMessageIndex() {
         // TODO: populate from db
 
-        Patient patient = new Patient("Tom Jensen");
-        Message message = new Message();
         try {
+            Practicioner practicioner = new Practicioner("Test behandler");
+            Patient patient = new Patient("Tom Jensen", practicioner);
+            Message message = new Message();
+
             message.setSender(patient);
             message.setText("Dette er en herre lang besked som kommer fra vores BeskedRepository. Den er godt nok statisk, men senere henter vi det bare fra Firebase.");
             message.setDateTime(LocalDateTime.now());
@@ -38,6 +42,8 @@ public class MessageRepository implements Observer {
         } catch (SenderIsNullException e) {
             Log.d(TAG, "populateMessageIndex: " + e.getMessage());
         } catch (MessageIsNullException e) {
+            Log.d(TAG, "populateMessageIndex: " + e.getMessage());
+        } catch (PatientIsNullException e) {
             Log.d(TAG, "populateMessageIndex: " + e.getMessage());
         }
 

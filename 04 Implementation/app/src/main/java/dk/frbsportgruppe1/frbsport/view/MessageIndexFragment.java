@@ -20,6 +20,7 @@ import dk.frbsportgruppe1.frbsport.R;
 import dk.frbsportgruppe1.frbsport.model.Message;
 import dk.frbsportgruppe1.frbsport.model.MessageIndex;
 import dk.frbsportgruppe1.frbsport.model.Patient;
+import dk.frbsportgruppe1.frbsport.model.Practicioner;
 import dk.frbsportgruppe1.frbsport.model.exceptions.PatientIsNullException;
 import dk.frbsportgruppe1.frbsport.repository.MessageRepository;
 import dk.frbsportgruppe1.frbsport.viewmodel.MessageIndexViewModel;
@@ -46,9 +47,9 @@ public class MessageIndexFragment extends Fragment implements Observer {
         testMessage = constraintLayout.findViewById(R.id.outgoingMessageText);
         testMessageInfo = constraintLayout.findViewById(R.id.outgoingMessageInfo);
 
-        Patient patient = new Patient("Test Patient"); // skal ikke laves her, skal hentes fra app context
-
         try {
+            Practicioner practicioner = new Practicioner("Test Behandler");
+            Patient patient = new Patient("Test Patient", practicioner); // skal ikke laves her, skal hentes fra app context
             MessageIndex messageIndex = new MessageIndex(patient);
 
             viewModel = new MessageIndexViewModel(messageIndex);
