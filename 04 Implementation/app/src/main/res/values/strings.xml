@@ -4,4 +4,9 @@
     <string name="menu_kalender">Kalender</string>
     <string name="textinput_hint_besked">Besked</string>
     <string name="menu_booking">Booking</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="string_behandling">Behandling</string>
+    <string name="string_traening">Træning</string>
 </resources>
