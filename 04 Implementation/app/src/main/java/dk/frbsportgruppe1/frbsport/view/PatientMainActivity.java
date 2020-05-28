@@ -35,7 +35,7 @@ public class PatientMainActivity extends AppCompatActivity implements BottomNavi
 
         switch (item.getItemId()) {
             case R.id.menuitem_beskeder:
-                Fragment beskedhistorikFragment = new BeskedhistorikFragment();
+                Fragment beskedhistorikFragment = new MessageIndexFragment();
                 navigateToFragment(beskedhistorikFragment);
                 return true;
             case R.id.menuitem_booking:

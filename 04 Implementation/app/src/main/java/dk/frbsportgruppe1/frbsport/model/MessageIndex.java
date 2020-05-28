@@ -41,6 +41,7 @@ public class MessageIndex extends Observable implements MessageIndexInterface {
             throw new MessageIsNullException("Beskeden kan ikke sendes");
         } else {
             messages.add(message);
+            setChanged();
         }
     }
 
