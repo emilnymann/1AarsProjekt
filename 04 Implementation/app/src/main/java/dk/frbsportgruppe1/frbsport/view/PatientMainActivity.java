@@ -12,7 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import dk.frbsportgruppe1.frbsport.R;
 
-public class PatientMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class PatientMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
 
     BottomNavigationView bottomNavigationView;
 
@@ -33,22 +33,33 @@ public class PatientMainActivity extends AppCompatActivity implements BottomNavi
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.menuitem_beskeder:
-                Fragment beskedhistorikFragment = new MessageIndexFragment();
-                navigateToFragment(beskedhistorikFragment);
-                return true;
-            case R.id.menuitem_booking:
-                Fragment bookingFragment = new BookingFragment();
-                navigateToFragment(bookingFragment);
-                return true;
-            case R.id.menuitem_kalender:
-                Fragment kalenderFragment = new KalenderFragment();
-                navigateToFragment(kalenderFragment);
-                return true;
-            default:
-                return false;
+        if (bottomNavigationView.getSelectedItemId() != item.getItemId()) {
+            switch (item.getItemId()) {
+                case R.id.menuitem_beskeder:
+                    Fragment beskedhistorikFragment = new MessageIndexFragment();
+                    navigateToFragment(beskedhistorikFragment);
+                    return true;
+                case R.id.menuitem_booking:
+                    Fragment bookingFragment = new BookingFragment();
+                    navigateToFragment(bookingFragment);
+                    return true;
+                case R.id.menuitem_kalender:
+                    Fragment kalenderFragment = new KalenderFragment();
+                    navigateToFragment(kalenderFragment);
+                    return true;
+                default:
+                    return false;
+            }
         }
+        else {
+            return false;
+        }
+
+    }
+
+    @Override
+    public void onNavigationItemReselected(@NonNull MenuItem item) {
+
     }
 
     /**
