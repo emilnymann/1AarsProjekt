@@ -10,6 +10,7 @@ import dk.frbsportgruppe1.frbsport.model.Message;
 import dk.frbsportgruppe1.frbsport.model.Patient;
 import dk.frbsportgruppe1.frbsport.model.PatientIndex;
 import dk.frbsportgruppe1.frbsport.model.Practicioner;
+import dk.frbsportgruppe1.frbsport.model.exceptions.DateIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.MessageIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.PatientIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.PracticionerIsNullException;
@@ -58,7 +59,7 @@ public class PatientIndexTest{
     }*/
 
     @Test
-    public void getDateTimeInMessages_tc6() throws PracticionerIsNullException,PatientIsNullException,MessageIsNullException{
+    public void getDateTimeInMessages_tc6() throws PracticionerIsNullException, PatientIsNullException, MessageIsNullException, DateIsNullException {
         //Grundopsætning af patientoversigt.
         PatientIndex patientIndex=new PatientIndex();
         Practicioner practicioner=new Practicioner("Christian Iuul");

@@ -5,8 +5,9 @@ package dk.frbsportgruppe1.frbsport.model.exceptions;
 * Udvider Exception for test kan gribe fejlen.
 */
 public class PatientIsNullException extends Exception{
-    public PatientIsNullException(String fejlBesked){
-        super(fejlBesked);
+    public PatientIsNullException(String errorMessage){
+        super(errorMessage);
     }
 }
+
 
