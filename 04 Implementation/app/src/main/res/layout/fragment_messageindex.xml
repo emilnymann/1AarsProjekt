@@ -24,21 +24,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
-
-        <include
-            layout="@layout/message_incoming"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
-
-        <include
-            layout="@layout/message_outgoing"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/messageRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

@@ -2,11 +2,7 @@ package dk.frbsportgruppe1.frbsport.viewmodel;
 
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 

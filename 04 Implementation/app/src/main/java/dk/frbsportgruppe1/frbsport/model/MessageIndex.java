@@ -42,6 +42,7 @@ public class MessageIndex extends Observable implements MessageIndexInterface {
         } else {
             messages.add(message);
             setChanged();
+            notifyObservers(this);
         }
     }
 

@@ -29,8 +29,8 @@ public class MessageRepository implements Observer {
         // TODO: populate from db
 
         try {
-            Practicioner practicioner = new Practicioner("Test behandler");
-            Patient patient = new Patient("Tom Jensen", practicioner);
+            Practicioner practicioner = new Practicioner("Test behandler", "PracUsername");
+            Patient patient = new Patient("Tom Jensen","TestUsername", practicioner);
             Message message = new Message();
 
             message.setSender(patient);
@@ -39,6 +39,14 @@ public class MessageRepository implements Observer {
 
             messageIndex.addMessage(message);
 
+            Message message2 = new Message();
+
+            message2.setSender(practicioner);
+            message2.setText("Dette er en herre lang besked (fra behandleren) som kommer fra vores BeskedRepository. Den er godt nok statisk, men senere henter vi det bare fra Firebase.");
+            message2.setDateTime(LocalDateTime.now());
+
+            messageIndex.addMessage(message2);
+
         } catch (SenderIsNullException e) {
             Log.d(TAG, "populateMessageIndex: " + e.getMessage());
         } catch (MessageIsNullException e) {
@@ -46,9 +54,6 @@ public class MessageRepository implements Observer {
         } catch (PatientIsNullException e) {
             Log.d(TAG, "populateMessageIndex: " + e.getMessage());
         }
-
-        Log.d(TAG, "populateMessageIndex: notify observers");
-        messageIndex.notifyObservers(messageIndex);
     }
 
     @Override
