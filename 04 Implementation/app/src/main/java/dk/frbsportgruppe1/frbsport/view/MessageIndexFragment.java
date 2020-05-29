@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -45,6 +46,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
 
     RecyclerView recyclerViewMessages;
     EditText chatTextInput;
+    TextInputLayout chatTextInputLayout;
 
     public MessageIndexFragment() {
         // Required empty public constructor
@@ -57,6 +59,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
 
         recyclerViewMessages = rootView.findViewById(R.id.messageRecyclerView);
         chatTextInput = rootView.findViewById(R.id.chatTextInputTextField);
+        chatTextInputLayout = rootView.findViewById(R.id.chatTextInputLayout);
 
         try {
             Practicioner practicioner = new Practicioner("Test Behandler", "PracUsername");
@@ -68,6 +71,10 @@ public class MessageIndexFragment extends Fragment implements Observer {
             viewModel.addObserver(this);
             messageRepository.populateMessageIndex();
 
+
+            /**
+             * Event listener til når der trykkes på send i Android software keyboardet.
+             */
             chatTextInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -76,17 +83,10 @@ public class MessageIndexFragment extends Fragment implements Observer {
                         try {
                             messageIndex.sendMessage(v.getText().toString(), patient);
                             v.setText("");
-                        } catch (MessageTooLongException e) {
-                            e.printStackTrace();
-                        } catch (MessageIsNullException e) {
-                            e.printStackTrace();
-                        } catch (InvalidMessageException e) {
-                            e.printStackTrace();
-                        } catch (SenderIsNullException e) {
-                            e.printStackTrace();
-                        } catch (DateIsNullException e) {
+                        } catch (MessageTooLongException | MessageIsNullException | InvalidMessageException | SenderIsNullException | DateIsNullException e) {
                             e.printStackTrace();
                         }
+
                         return true;
                     }
 
@@ -94,6 +94,20 @@ public class MessageIndexFragment extends Fragment implements Observer {
                 }
             });
 
+            /**
+             * Event listener til når der trykkes på chat input send ikonet.
+             */
+            chatTextInputLayout.setEndIconOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        messageIndex.sendMessage(chatTextInput.getText().toString(), patient);
+                        chatTextInput.setText("");
+                    } catch (MessageTooLongException | MessageIsNullException | InvalidMessageException | SenderIsNullException | DateIsNullException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
         } catch (PatientIsNullException e) {
             Log.d(TAG, "onCreateView: " + e.getMessage());
