@@ -27,8 +27,8 @@ public class SendMessageTest {
      *     Vi tillader ikke beskeder over 255 tegn.
      */
     @Test (expected = MessageTooLongException.class)
-    public void sendBesked_tc1() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException {
-        Patient patient = new Patient ("Tom Jensen", new Practicioner("Christian Iuul"));
+    public void sendMessage_tc1() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException, DateIsNullException {
+        Patient patient = new Patient ("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
         MessageIndex messageIndex = new MessageIndex(patient);
 
         String messageText = "";
@@ -45,8 +45,8 @@ public class SendMessageTest {
      *     Vi tillader ikke tomme beskeder.
      */
     @Test (expected = MessageIsNullException.class)
-    public void sendBesked_tc2() throws PatientIsNullException, SenderIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException {
-        Patient patient = new Patient ("Tom Jensen", new Practicioner("Christian Iuul"));
+    public void sendMessage_tc2() throws PatientIsNullException, SenderIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, DateIsNullException {
+        Patient patient = new Patient ("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
         MessageIndex messageIndex = new MessageIndex(patient);
 
         messageIndex.sendMessage("", patient);
@@ -56,8 +56,8 @@ public class SendMessageTest {
      *     Denne test er lavet for at sikre vores main success scenario virker og beskeder bliver sendt.
      */
     @Test
-    public void sendBesked_tc3() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, SenderIsNullException, InvalidMessageException, DateIsNullException {
-        Patient patient = new Patient ("Tom Jensen", new Practicioner("Christian Iuul"));
+    public void sendMessage_tc3() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, SenderIsNullException, InvalidMessageException, DateIsNullException {
+        Patient patient = new Patient ("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
         MessageIndex messageIndex = new MessageIndex(patient);
 
         messageIndex.sendMessage("flot", patient);
@@ -67,8 +67,7 @@ public class SendMessageTest {
         message.setSender(patient);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         message.setDateTime(LocalDateTime.parse("2020-05-22 15:10", formatter));
-        
-        messageIndex.addMessage(message);
+
         message.setSent(true);
 
         assertEquals(1, messageIndex.getMessages().size());
@@ -81,8 +80,8 @@ public class SendMessageTest {
      *     Vi tillader ikke beskeder kun at indeholde whitespaces.
      */
     @Test (expected = InvalidMessageException.class)
-    public void sendBesked_tc4() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException {
-        Patient patient = new Patient ("Tom Jensen", new Practicioner("Christian Iuul"));
+    public void sendMessage_tc4() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException, DateIsNullException {
+        Patient patient = new Patient ("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
         MessageIndex messageIndex = new MessageIndex(patient);
 
         messageIndex.sendMessage("               ", patient);
@@ -94,8 +93,8 @@ public class SendMessageTest {
      *     Vi skal knytte en patient til en beskedhistorik.
      */
     @Test (expected = SenderIsNullException.class)
-    public void sendBesked_tc5() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException {
-        Patient patient = new Patient("Tom Jensen", new Practicioner("Christian Iuul"));
+    public void sendMessage_tc5() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException, DateIsNullException {
+        Patient patient = new Patient("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
         MessageIndex messageIndex = new MessageIndex(patient);
 
         messageIndex.sendMessage("flot", null);
@@ -107,8 +106,8 @@ public class SendMessageTest {
      *     Vi skal have dato på en sendt besked.
      */
     @Test (expected = DateIsNullException.class)
-    public void sendBesked_tc6() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException, DateIsNullException {
-        Patient patient = new Patient ("Tom Jensen", new Practicioner("Christian Iuul"));
+    public void sendMessage_tc6() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException, DateIsNullException {
+        Patient patient = new Patient ("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
         MessageIndex messageIndex = new MessageIndex(patient);
         messageIndex.sendMessage("flot", patient);
 

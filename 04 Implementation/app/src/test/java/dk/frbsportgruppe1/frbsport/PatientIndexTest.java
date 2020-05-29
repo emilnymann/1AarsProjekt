@@ -19,7 +19,7 @@ public class PatientIndexTest{
     @Test
     public void isPatientIndexEmpty_tc1() throws PracticionerIsNullException{
         PatientIndex patientIndex =new PatientIndex();
-        Practicioner practicioner=new Practicioner("Christian Iuul");
+        Practicioner practicioner=new Practicioner("Christian Iuul", "TestUsername");
         patientIndex.setPracticioner(practicioner);
         assertEquals("PatientList.patientSize gav andet end 0 når det burde være 0 når der ingen patienter er.",0,patientIndex.patientSize());
     }
@@ -27,16 +27,16 @@ public class PatientIndexTest{
     @Test
     public void isPatientAddedToPatientIndex_tc2() throws PracticionerIsNullException,PatientIsNullException{
         PatientIndex patientIndex=new PatientIndex();
-        Practicioner practicioner=new Practicioner("Christian Iuul");
+        Practicioner practicioner=new Practicioner("Christian Iuul", "TestUsername");
         patientIndex.setPracticioner(practicioner);
-        patientIndex.addPatient(new Patient("Tom Jensen",practicioner));
+        patientIndex.addPatient(new Patient("Tom Jensen", "TestUsername",practicioner));
         assertEquals("patientSize gav andet end 1 når det burde være 1 når der er en patienter.",1,patientIndex.patientSize());
     }
 
     @Test(expected=PatientIsNullException.class)
     public void isPatientNull_tc3() throws PracticionerIsNullException,PatientIsNullException {
         PatientIndex po=new PatientIndex();
-        Practicioner practicioner=new Practicioner("Christian Iuul");
+        Practicioner practicioner=new Practicioner("Christian Iuul", "TestUsername");
         po.setPracticioner(practicioner);
         po.addPatient(null);
     }
@@ -44,9 +44,9 @@ public class PatientIndexTest{
     @Test(expected=PracticionerIsNullException.class)
     public void isPracticionerNull_tc4() throws PracticionerIsNullException,PatientIsNullException {
         PatientIndex po=new PatientIndex();
-        Practicioner practicioner=new Practicioner("Christian Iuul");
+        Practicioner practicioner=new Practicioner("Christian Iuul", "TestUsername");
         po.setPracticioner(null);
-        po.addPatient(new Patient("Tom Jensen",practicioner));
+        po.addPatient(new Patient("Tom Jensen", "TestUsername",practicioner));
     }
 
     //Samme som TC4
@@ -62,12 +62,12 @@ public class PatientIndexTest{
     public void getDateTimeInMessages_tc6() throws PracticionerIsNullException, PatientIsNullException, MessageIsNullException, DateIsNullException {
         //Grundopsætning af patientoversigt.
         PatientIndex patientIndex=new PatientIndex();
-        Practicioner practicioner=new Practicioner("Christian Iuul");
+        Practicioner practicioner=new Practicioner("Christian Iuul", "TestUsername");
         patientIndex.setPracticioner(practicioner);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         //Patient 1
-        Patient p1=new Patient("Tom Jensen",practicioner);
+        Patient p1=new Patient("Tom Jensen", "TestUsername",practicioner);
         Message msg1=new Message("Hej Christian",p1);
         LocalDateTime ldt1=LocalDateTime.parse("2020-02-22 13:37:01",formatter);
         msg1.setDateTime(ldt1);
@@ -75,7 +75,7 @@ public class PatientIndexTest{
         patientIndex.addPatient(p1);
 
         //Patient 2
-        Patient p2=new Patient("Preben Hansen",practicioner);
+        Patient p2=new Patient("Preben Hansen", "TestUsername",practicioner);
         Message msg2=new Message("Hej Iuul",p2);
         LocalDateTime ldt2=LocalDateTime.parse("2020-02-23 14:10:15",formatter);
         msg2.setDateTime(ldt2);
