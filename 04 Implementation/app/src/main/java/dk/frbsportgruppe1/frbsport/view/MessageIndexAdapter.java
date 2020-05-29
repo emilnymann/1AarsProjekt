@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
     private static final String TAG = "MessageIndexAdapter";
 
     private List<Message> messages;
-    private User loggedInUser;
+    private String loggedInUsername;
 
     public MessageIndexAdapter(List<Message> messages) {
         this.messages = messages;
@@ -41,6 +42,7 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_layout, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(view);
+        loggedInUsername = PreferenceManager.getDefaultSharedPreferences(parent.getContext()).getString("pref_username", "N/A");
 
         return viewHolder;
     }
@@ -52,7 +54,7 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
         String sender = "Dig";
 
         // hvis afsenderen af beskeden ikke er den bruger der er logget ind, sæt afsender navnet til det fulde navn i stedet for "dig".
-        if ("TestUsername" != message.getSender().getUsername()) { // TODO: check rigtig brugernavn istedet for statisk string
+        if (loggedInUsername != message.getSender().getUsername()) {
             sender = message.getSender().getName();
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorAccentLight));
 

@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import androidx.preference.PreferenceManager;
+
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,6 +22,9 @@ public class PatientMainActivity extends AppCompatActivity implements BottomNavi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patientmain);
+
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("pref_username", "TestUsername").apply(); // TODO: Skal sættes i login, ikke her.
+
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
