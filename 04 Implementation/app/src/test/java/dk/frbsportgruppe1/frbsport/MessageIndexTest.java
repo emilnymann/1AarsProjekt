@@ -18,7 +18,7 @@ public class MessageIndexTest {
 
     @Test
     public void newMessageHistory_tc1() throws PatientIsNullException {
-        Patient patient = new Patient("Tom Jensen",new Practicioner("Christian Iuul"));
+        Patient patient = new Patient("Tom Jensen", "TestUsername",new Practicioner("Christian Iuul", "TestUsername"));
         MessageIndex messageIndex = new MessageIndex(patient);
 
         assertEquals(0, messageIndex.getMessages().size());
@@ -27,7 +27,7 @@ public class MessageIndexTest {
 
     @Test
     public void addMessage_tc2() throws MessageIsNullException, SenderIsNullException, PatientIsNullException, DateIsNullException {
-        Patient patient = new Patient("Tom Jensen",new Practicioner("Christian Iuul"));
+        Patient patient = new Patient("Tom Jensen", "TestUsername",new Practicioner("Christian Iuul", "TestUsername"));
 
         Message message = new Message();
         message.setText("tekst");
@@ -45,7 +45,7 @@ public class MessageIndexTest {
 
     @Test(expected = MessageIsNullException.class)
     public void nullMessage_tc3() throws MessageIsNullException, PatientIsNullException {
-        Patient patient = new Patient("Tom Jensen",new Practicioner("Christian Iuul"));
+        Patient patient = new Patient("Tom Jensen", "TestUsername",new Practicioner("Christian Iuul", "TestUsername"));
         Message message = null;
 
         MessageIndex messageIndex = new MessageIndex(patient);
@@ -74,7 +74,7 @@ public class MessageIndexTest {
 
     @Test
     public void sortedMessages_tc6() throws MessageIsNullException, SenderIsNullException, PatientIsNullException, DateIsNullException {
-        Patient patient = new Patient("Tom Jensen",new Practicioner("Christian Iuul"));
+        Patient patient = new Patient("Tom Jensen", "TestUsername",new Practicioner("Christian Iuul", "TestUsername"));
         MessageIndex messageIndex = new MessageIndex(patient);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
