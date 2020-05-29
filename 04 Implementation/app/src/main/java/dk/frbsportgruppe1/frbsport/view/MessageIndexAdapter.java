@@ -1,5 +1,6 @@
 package dk.frbsportgruppe1.frbsport.view;
 
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -50,13 +52,22 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
         String sender = "Dig";
 
         // hvis afsenderen af beskeden ikke er den bruger der er logget ind, sæt afsender navnet til det fulde navn i stedet for "dig".
-        if ("TestUsername" != message.getSender().getUsername()) {
+        if ("TestUsername" != message.getSender().getUsername()) { // TODO: check rigtig brugernavn istedet for statisk string
             sender = message.getSender().getName();
+            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorAccentLight));
 
-            // TODO: ændre cardview appearance når beskeden ikke er brugerens ejen.
-
-            
-
+            ConstraintSet set = new ConstraintSet();
+            set.clone(holder.constraintLayout);
+            set.connect(holder.textViewMessageInfo.getId(), ConstraintSet.LEFT, holder.constraintLayout.getId(), ConstraintSet.LEFT);
+            set.connect(holder.cardView.getId(), ConstraintSet.LEFT, holder.constraintLayout.getId(), ConstraintSet.LEFT);
+            set.applyTo(holder.constraintLayout);
+        }
+        else {
+            ConstraintSet set = new ConstraintSet();
+            set.clone(holder.constraintLayout);
+            set.connect(holder.textViewMessageInfo.getId(), ConstraintSet.RIGHT, holder.constraintLayout.getId(), ConstraintSet.RIGHT);
+            set.connect(holder.cardView.getId(), ConstraintSet.RIGHT, holder.constraintLayout.getId(), ConstraintSet.RIGHT);
+            set.applyTo(holder.constraintLayout);
         }
 
         // byg resten af message info teksten.

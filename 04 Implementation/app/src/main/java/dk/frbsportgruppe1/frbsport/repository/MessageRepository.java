@@ -10,6 +10,7 @@ import dk.frbsportgruppe1.frbsport.model.Message;
 import dk.frbsportgruppe1.frbsport.model.MessageIndex;
 import dk.frbsportgruppe1.frbsport.model.Patient;
 import dk.frbsportgruppe1.frbsport.model.Practicioner;
+import dk.frbsportgruppe1.frbsport.model.exceptions.DateIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.MessageIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.PatientIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
@@ -53,6 +54,8 @@ public class MessageRepository implements Observer {
             Log.d(TAG, "populateMessageIndex: " + e.getMessage());
         } catch (PatientIsNullException e) {
             Log.d(TAG, "populateMessageIndex: " + e.getMessage());
+        } catch (DateIsNullException e) {
+            e.printStackTrace();
         }
     }
 

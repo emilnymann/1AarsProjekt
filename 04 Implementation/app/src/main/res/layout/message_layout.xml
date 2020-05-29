@@ -15,7 +15,7 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Badge"
         android:textColor="@color/material_on_background_disabled"
         app:layout_constraintBottom_toTopOf="@+id/messageCard"
-        app:layout_constraintEnd_toEndOf="parent" />
+        tools:layout_editor_absoluteX="315dp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/messageCard"
@@ -26,7 +26,7 @@
         app:cardElevation="0dp"
         app:contentPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        tools:layout_editor_absoluteX="175dp">
 
         <TextView
             android:id="@+id/messageText"
