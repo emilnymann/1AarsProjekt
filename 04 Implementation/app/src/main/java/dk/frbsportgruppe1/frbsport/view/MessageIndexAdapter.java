@@ -1,7 +1,5 @@
 package dk.frbsportgruppe1.frbsport.view;
 
-import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,6 @@ import java.util.List;
 
 import dk.frbsportgruppe1.frbsport.R;
 import dk.frbsportgruppe1.frbsport.model.Message;
-import dk.frbsportgruppe1.frbsport.model.User;
 
 public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapter.ViewHolder> {
 
@@ -54,7 +51,7 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
         String sender = "Dig";
 
         // hvis afsenderen af beskeden ikke er den bruger der er logget ind, sæt afsender navnet til det fulde navn i stedet for "dig".
-        if (loggedInUsername != message.getSender().getUsername()) {
+        if (!loggedInUsername.equals(message.getSender().getUsername())) {
             sender = message.getSender().getName();
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorAccentLight));
 
@@ -92,14 +89,14 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
         return messages.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewMessageInfo;
         TextView textViewMessageText;
         ConstraintLayout constraintLayout;
         CardView cardView;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             this.textViewMessageInfo = itemView.findViewById(R.id.messageInfo);
