@@ -89,6 +89,11 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
         return messages.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewMessageInfo;

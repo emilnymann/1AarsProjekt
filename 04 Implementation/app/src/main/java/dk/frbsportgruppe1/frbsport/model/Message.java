@@ -21,7 +21,6 @@ public class Message implements MessageInterface {
     public Message(String text, User sender) {
         this.text = text;
         this.sender = sender;
-
     }
 
     /**
