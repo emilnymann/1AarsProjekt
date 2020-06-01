@@ -62,8 +62,8 @@ public class MessageIndexFragment extends Fragment implements Observer {
         chatTextInputLayout = rootView.findViewById(R.id.chatTextInputLayout);
 
         try {
-            Practicioner practicioner = new Practicioner("Test Behandler", "PracUsername");
-            final Patient patient = new Patient("Test Patient", "TestUsername", practicioner); // skal ikke laves her, skal hentes fra app context
+            Practicioner practicioner = new Practicioner("Christian Iuul", "testprac@frbsport.dk");
+            final Patient patient = new Patient("Emil Nymann", "emil491c@edu.easj.dk", practicioner); // skal ikke laves her, skal hentes fra app context
             final MessageIndex messageIndex = new MessageIndex(patient);
 
             viewModel = new MessageIndexViewModel(messageIndex);

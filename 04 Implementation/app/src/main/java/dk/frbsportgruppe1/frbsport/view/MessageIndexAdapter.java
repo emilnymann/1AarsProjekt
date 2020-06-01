@@ -51,7 +51,7 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
         String sender = "Dig";
 
         // hvis afsenderen af beskeden ikke er den bruger der er logget ind, sæt afsender navnet til det fulde navn i stedet for "dig".
-        if (!loggedInUsername.equals(message.getSender().getUsername())) {
+        if (!loggedInUsername.equals(message.getSender().getEmail())) {
             sender = message.getSender().getName();
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorAccentLight));
 

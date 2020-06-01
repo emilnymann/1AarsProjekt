@@ -3,11 +3,11 @@ package dk.frbsportgruppe1.frbsport.model;
 public class User implements UserInterface{
     private int id;
     private String name;
-    private String username;
+    private String email;
 
-    public User(String name, String username){
+    public User(String name, String email){
         this.name = name;
-        this.username = username;
+        this.email = email;
     }
 
     public void setId(int id){
@@ -26,11 +26,11 @@ public class User implements UserInterface{
         return name;
     }
 
-    public String getUsername() {
-        return username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getEmail() {
+        return  email;
     }
 }
