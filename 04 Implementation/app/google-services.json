@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "676043809898",
+    "firebase_url": "https://frbsport-4c713.firebaseio.com",
+    "project_id": "frbsport-4c713",
+    "storage_bucket": "frbsport-4c713.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676043809898:android:15584213538c3489379613",
+        "android_client_info": {
+          "package_name": "dk.frbsportgruppe1.frbsport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676043809898-nqpr3tmvtltkq54je4g3ls9lqdo5mtkr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq-b3w902CACdzQYDRXo2cxtr1G2kETPw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676043809898-nqpr3tmvtltkq54je4g3ls9lqdo5mtkr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

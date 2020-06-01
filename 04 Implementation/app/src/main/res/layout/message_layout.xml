@@ -2,37 +2,39 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/messageConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp">
 
     <TextView
-        android:id="@+id/incomingMessageInfo"
+        android:id="@+id/messageInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Christian, søndag kl. 12:04"
+        android:text="Dig, mandag kl. 17:54"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Badge"
         android:textColor="@color/material_on_background_disabled"
-        app:layout_constraintBottom_toTopOf="@+id/incomingMessageCard"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/messageCard"
+        tools:layout_editor_absoluteX="315dp" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/incomingMessageCard"
+        android:id="@+id/messageCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/colorAccentLight"
+        app:cardBackgroundColor="@color/colorPrimaryLight"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
         app:contentPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        tools:layout_editor_absoluteX="175dp">
 
         <TextView
-            android:id="@+id/incomingMessageText"
+            android:id="@+id/messageText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="220dp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec ultricies dolor."
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@color/colorTextOnAccentLight" />
+            android:textColor="@color/colorTextOnPrimaryLight" />
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
