@@ -13,8 +13,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -47,6 +49,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
     RecyclerView recyclerViewMessages;
     EditText chatTextInput;
     TextInputLayout chatTextInputLayout;
+    ProgressBar messageIndexProgressBar;
 
     public MessageIndexFragment() {
         // Required empty public constructor
@@ -57,6 +60,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
 
         View rootView = inflater.inflate(R.layout.fragment_messageindex, container, false);
 
+        messageIndexProgressBar = rootView.findViewById((R.id.messageIndexProgressBar));
         recyclerViewMessages = rootView.findViewById(R.id.messageRecyclerView);
         chatTextInput = rootView.findViewById(R.id.chatTextInputTextField);
         chatTextInputLayout = rootView.findViewById(R.id.chatTextInputLayout);
@@ -126,6 +130,8 @@ public class MessageIndexFragment extends Fragment implements Observer {
         recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
 
         recyclerViewMessages.scrollToPosition(messages.size() - 1);
+        messageIndexProgressBar.setVisibility(View.INVISIBLE);
+        recyclerViewMessages.setVisibility(View.VISIBLE);
 
 
     }

@@ -31,6 +31,7 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
 
     public MessageIndexAdapter(List<Message> messages) {
         this.messages = messages;
+        auth = FirebaseAuth.getInstance();
     }
 
     public void setMessages(List<Message> messages) {
@@ -42,7 +43,6 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_layout, parent, false);
 
-        auth = FirebaseAuth.getInstance();
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;

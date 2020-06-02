@@ -28,10 +28,7 @@ public class MessageIndex extends Observable implements MessageIndexInterface {
         } else {
             this.patient = patient;
         }
-
-
     }
-
 
     @Override
     public void showMessageHistory() {
@@ -63,8 +60,7 @@ public class MessageIndex extends Observable implements MessageIndexInterface {
         } else if (sender == null) {
             throw new SenderIsNullException("Beskeden kan ikke sendes uden afsender");
         } else {
-            Message message = new Message(messageText, sender);
-            message.setDateTime(LocalDateTime.now());
+            Message message = new Message(messageText, sender, LocalDateTime.now());
             this.addMessage(message);
         }
     }
@@ -81,7 +77,6 @@ public class MessageIndex extends Observable implements MessageIndexInterface {
     }
 
     public ArrayList<Message> getMessages() {
-//        messages.sort(new SortMessages());
         return messages;
     }
 
