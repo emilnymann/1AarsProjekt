@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FRBSPORT</string>
+    <string name="app_name">Frederiksberg Sportsklinik</string>
     <string name="menu_beskeder">Beskeder</string>
     <string name="menu_kalender">Kalender</string>
     <string name="textinput_hint_besked">Besked</string>

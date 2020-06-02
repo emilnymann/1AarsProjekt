@@ -9,9 +9,9 @@ public class Patient extends User implements PatientInterface{
     private Practicioner practicioner;
     private MessageIndex messageIndex=new MessageIndex(this);
 
-    public Patient(String name, String email,Practicioner practicioner) throws PatientIsNullException{
-        super(name, email);
-        this.practicioner=practicioner;
+    public Patient(String id, String name, String email, Practicioner practicioner) throws PatientIsNullException{
+        super(id, name, email);
+        this.practicioner = practicioner;
     }
 
     public void setPracticioner(Practicioner practicioner) {

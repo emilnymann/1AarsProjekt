@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -14,7 +15,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -33,40 +36,37 @@ public class MessageRepository implements Observer {
     private static final String TAG = "MessageRepository";
 
     private final FirebaseFirestore db;
-    private MessageIndex messageIndex;
 
     public MessageRepository(MessageIndex messageIndex) {
         db = FirebaseFirestore.getInstance();
-        this.messageIndex = messageIndex;
         messageIndex.addObserver(this);
     }
 
-    public void populateMessageIndex() {
-        db.collection("users").whereEqualTo("email", messageIndex.getPatient().getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public void populateMessageIndex(final MessageIndex messageIndex) {
+        String patientId = messageIndex.getPatient().getId();
+        final User[] sender = new User[1];
+        db.collection("messages").whereEqualTo("patient", patientId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    String patientUid = task.getResult().getDocuments().get(0).getId();
-                    db.collection("messages").whereEqualTo("patient", "users/" + patientUid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                ArrayList<Message> messages = new ArrayList<>();
-                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                    DocumentSnapshot senderRef = documentSnapshot.getDocumentReference("sender").get().getResult();
-                                    User sender = new User(senderRef.getString("name"), senderRef.getString("email"));
-                                    Message message = new Message(documentSnapshot.getString("text"), sender);
+                    final ArrayList<Message> messages = new ArrayList<>();
+                    for (final QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                        db.collection("users").document(documentSnapshot.getString("sender")).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+
+                                    DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
+                                    sender[0] = new User(task.getResult().getId(), task.getResult().getString("name"), task.getResult().getString("email"));
+                                    Message message = new Message(documentSnapshot.getString("text"), sender[0], LocalDateTime.parse(documentSnapshot.getString("datetime"), formatter));
+                                    Log.d(TAG, "onComplete: message get: " + message.getText() + ", " + DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(message.getDateTime()));
                                     messages.add(message);
+                                    messageIndex.setMessage(messages);
                                 }
-//                                messageIndex.setMessage(messages);
-                                Log.d(TAG, "onComplete: " + messages);
-                            } else {
-                                Log.d(TAG, "onComplete: get failed with " + task.getException());
                             }
-                        }
-                    });
-                } else {
-                    Log.d(TAG, "onComplete: get failed with " + task.getException());
+                        });
+                    }
                 }
             }
         });
@@ -74,8 +74,6 @@ public class MessageRepository implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-//        if (messageIndex.hashCode() != ((MessageIndex) arg).hashCode()) {
-//            // TODO: send new messages to database.
-//        }
+
     }
 }

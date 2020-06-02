@@ -23,6 +23,12 @@ public class Message implements MessageInterface {
         this.sender = sender;
     }
 
+    public Message(String text, User sender, LocalDateTime dateTime) {
+        this.text = text;
+        this.sender = sender;
+        this.dateTime = dateTime;
+    }
+
     /**
      * Dette er en no-arg constructor da vi skal kunne lave et objekt uden at give den parametre
      */

@@ -23,9 +23,6 @@ public class PatientMainActivity extends AppCompatActivity implements BottomNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patientmain);
 
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("pref_username", "TestUsername").apply(); // TODO: Skal sættes i login, ikke her.
-
-
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }

@@ -13,6 +13,10 @@ import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.List;
 
 import dk.frbsportgruppe1.frbsport.R;
@@ -23,7 +27,7 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
     private static final String TAG = "MessageIndexAdapter";
 
     private List<Message> messages;
-    private String loggedInUsername;
+    private FirebaseAuth auth;
 
     public MessageIndexAdapter(List<Message> messages) {
         this.messages = messages;
@@ -38,8 +42,8 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_layout, parent, false);
 
+        auth = FirebaseAuth.getInstance();
         ViewHolder viewHolder = new ViewHolder(view);
-        loggedInUsername = PreferenceManager.getDefaultSharedPreferences(parent.getContext()).getString("pref_username", "N/A");
 
         return viewHolder;
     }
@@ -49,24 +53,27 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
         Message message = messages.get(position);
 
         String sender = "Dig";
+        FirebaseUser loggedInUser = auth.getCurrentUser();
 
-        // hvis afsenderen af beskeden ikke er den bruger der er logget ind, sæt afsender navnet til det fulde navn i stedet for "dig".
-        if (!loggedInUsername.equals(message.getSender().getEmail())) {
-            sender = message.getSender().getName();
-            holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorAccentLight));
+        if (loggedInUser != null) {
+            // hvis afsenderen af beskeden ikke er den bruger der er logget ind, sæt afsender navnet til det fulde navn i stedet for "dig".
+            if (!loggedInUser.getUid().equals(message.getSender().getId())) {
+                sender = message.getSender().getName();
+                holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorAccentLight));
 
-            ConstraintSet set = new ConstraintSet();
-            set.clone(holder.constraintLayout);
-            set.connect(holder.textViewMessageInfo.getId(), ConstraintSet.LEFT, holder.constraintLayout.getId(), ConstraintSet.LEFT);
-            set.connect(holder.cardView.getId(), ConstraintSet.LEFT, holder.constraintLayout.getId(), ConstraintSet.LEFT);
-            set.applyTo(holder.constraintLayout);
-        }
-        else {
-            ConstraintSet set = new ConstraintSet();
-            set.clone(holder.constraintLayout);
-            set.connect(holder.textViewMessageInfo.getId(), ConstraintSet.RIGHT, holder.constraintLayout.getId(), ConstraintSet.RIGHT);
-            set.connect(holder.cardView.getId(), ConstraintSet.RIGHT, holder.constraintLayout.getId(), ConstraintSet.RIGHT);
-            set.applyTo(holder.constraintLayout);
+                ConstraintSet set = new ConstraintSet();
+                set.clone(holder.constraintLayout);
+                set.connect(holder.textViewMessageInfo.getId(), ConstraintSet.LEFT, holder.constraintLayout.getId(), ConstraintSet.LEFT);
+                set.connect(holder.cardView.getId(), ConstraintSet.LEFT, holder.constraintLayout.getId(), ConstraintSet.LEFT);
+                set.applyTo(holder.constraintLayout);
+            }
+            else {
+                ConstraintSet set = new ConstraintSet();
+                set.clone(holder.constraintLayout);
+                set.connect(holder.textViewMessageInfo.getId(), ConstraintSet.RIGHT, holder.constraintLayout.getId(), ConstraintSet.RIGHT);
+                set.connect(holder.cardView.getId(), ConstraintSet.RIGHT, holder.constraintLayout.getId(), ConstraintSet.RIGHT);
+                set.applyTo(holder.constraintLayout);
+            }
         }
 
         // byg resten af message info teksten.

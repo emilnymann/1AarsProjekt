@@ -71,7 +71,7 @@ public class MessageIndex extends Observable implements MessageIndexInterface {
     public void setMessage(ArrayList<Message> messages) {
         this.messages = messages;
         setChanged();
-        notifyObservers();
+        notifyObservers(this);
     }
 
     public ArrayList<Message> getMessages() {
