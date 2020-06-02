@@ -11,6 +11,7 @@ import androidx.preference.PreferenceManager;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import dk.frbsportgruppe1.frbsport.R;
 

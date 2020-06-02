@@ -10,7 +10,7 @@
     <string name="string_behandling">Behandling</string>
     <string name="string_traening">Træning</string>
     <string name="string_dig">Dig</string>
-    <string name="string_email">Email</string>
+    <string name="string_email">E-mail</string>
     <string name="string_adgangskode">Adgangskode</string>
     <string name="string_login">Login</string>
 </resources>

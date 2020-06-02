@@ -45,7 +45,7 @@ public class MessageRepository implements Observer {
     public void populateMessageIndex(final MessageIndex messageIndex) {
         String patientId = messageIndex.getPatient().getId();
         final User[] sender = new User[1];
-        db.collection("messages").whereEqualTo("patient", patientId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("messages").whereEqualTo("patient", patientId).orderBy("datetime").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
