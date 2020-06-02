@@ -2,6 +2,7 @@ package dk.frbsportgruppe1.frbsport.model;
 
 import java.time.LocalDateTime;
 
+import dk.frbsportgruppe1.frbsport.model.exceptions.DateIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
 
 public class Message implements MessageInterface {
@@ -9,6 +10,7 @@ public class Message implements MessageInterface {
     private User sender;
     private LocalDateTime dateTime;
     private boolean sent;
+
 
     /**
      * Constructoren sætter parametrene text og sender.
@@ -76,7 +78,10 @@ public class Message implements MessageInterface {
      * @param dateTime bruges til at sortere beskeder efter dato. Brugerene skal se beskederne i den rigtige rækkefølge.
      */
     @Override
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(LocalDateTime dateTime) throws DateIsNullException {
+        if (dateTime == null) {
+            throw new DateIsNullException("dato kan ikke sættes, da dato er nul");
+        }
         this.dateTime = dateTime;
     }
 
@@ -88,6 +93,16 @@ public class Message implements MessageInterface {
     public LocalDateTime getDateTime() {
         return dateTime;
     }
+
+
+    public boolean isSent() {
+        return sent;
+    }
+
+    public void setSent(boolean sent) {
+        this.sent = sent;
+    }
+
 
 
 }

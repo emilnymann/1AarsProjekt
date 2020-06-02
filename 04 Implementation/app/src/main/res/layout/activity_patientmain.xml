@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/patientMainFragment"
-        android:name="dk.frbsportgruppe1.frbsport.view.BeskedhistorikFragment"
+        android:name="dk.frbsportgruppe1.frbsport.view.MessageIndexFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"

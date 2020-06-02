@@ -1,10 +1,23 @@
 package dk.frbsportgruppe1.frbsport;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import org.junit.Test;
-import static org.junit.Assert.*;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import dk.frbsportgruppe1.frbsport.model.Message;
+import dk.frbsportgruppe1.frbsport.model.MessageIndex;
+import dk.frbsportgruppe1.frbsport.model.Patient;
+import dk.frbsportgruppe1.frbsport.model.Practicioner;
+import dk.frbsportgruppe1.frbsport.model.exceptions.DateIsNullException;
+import dk.frbsportgruppe1.frbsport.model.exceptions.InvalidMessageException;
+import dk.frbsportgruppe1.frbsport.model.exceptions.MessageIsNullException;
+import dk.frbsportgruppe1.frbsport.model.exceptions.MessageTooLongException;
+import dk.frbsportgruppe1.frbsport.model.exceptions.PatientIsNullException;
+import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 public class SendMessageTest {
 
@@ -13,21 +26,17 @@ public class SendMessageTest {
      *     vi i vores SD02 når til object creation og derfor ikke bruger datotid parametret.
      *     Vi tillader ikke beskeder over 255 tegn.
      */
-    @Test (expected = BeskedForLangException.class)
-    public void sendBesked_tc1(){
-        Patient patient = new Patient ("Tom Jensen");
-        Beskedhistorik beskedhistorik = new Beskedhistorik(patient);
+    @Test (expected = MessageTooLongException.class)
+    public void sendMessage_tc1() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException, DateIsNullException {
+        Patient patient = new Patient ("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
+        MessageIndex messageIndex = new MessageIndex(patient);
 
-        String beskedtekst = "";
+        String messageText = "";
         for (int i = 0; i <= 256; i++) {
-            beskedtekst += "z";
+            messageText += "z";
         }
 
-        Besked besked = new Besked ();
-        besked.saetTekst(beskedtekst);
-        besked.saetAfsender(patient);
-
-        beskedhistorik.sendBesked(besked, patient);
+        messageIndex.sendMessage(messageText, patient);
     }
 
     /**
@@ -35,37 +44,34 @@ public class SendMessageTest {
      *     vi i vores SD når til object creation og derfor ikke bruger datotid parametret.
      *     Vi tillader ikke tomme beskeder.
      */
-    @Test (expected = BeskedtekstErNullException)
-    public void sendBesked_tc2(){
-        Patient patient = new Patient ("Tom Jensen");
-        Beskedhistorik beskedhistorik = new Beskedhistorik(patient);
+    @Test (expected = MessageIsNullException.class)
+    public void sendMessage_tc2() throws PatientIsNullException, SenderIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, DateIsNullException {
+        Patient patient = new Patient ("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
+        MessageIndex messageIndex = new MessageIndex(patient);
 
-        Besked besked = new Besked();
-        besked.saetTekst(null);
-        besked.saetAfsender(patient);
-
-        beskedhistorik.sendBesked(besked, patient);
+        messageIndex.sendMessage("", patient);
     }
 
     /**
      *     Denne test er lavet for at sikre vores main success scenario virker og beskeder bliver sendt.
      */
     @Test
-    public void sendBesked_tc3(){
-        Patient patient = new Patient ("Tom Jensen");
-        Beskedhistorik beskedhistorik = new Beskedhistorik(patient);
+    public void sendMessage_tc3() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, SenderIsNullException, InvalidMessageException, DateIsNullException {
+        Patient patient = new Patient ("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
+        MessageIndex messageIndex = new MessageIndex(patient);
 
-        beskedhistorik.sendBesked(besked, patient);
+        messageIndex.sendMessage("flot", patient);
 
-        Besked besked = new Besked();
-        besked.saetTekst("flot");
-        besked.saetAfsender(patient);
-        besked.saetDatotid(LocalDateTime.parse("2020-05-22 15:10"));
-        
-        beskedhistorik.tilfoejBesked(besked, patient);
+        Message message = new Message();
+        message.setText("flot");
+        message.setSender(patient);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        message.setDateTime(LocalDateTime.parse("2020-05-22 15:10", formatter));
 
-        assertEquals(1, beskedhistorik.beskeder.size());
-        assertEquals(besked.afsendt, true);
+        message.setSent(true);
+
+        assertEquals(1, messageIndex.getMessages().size());
+        assertTrue(message.isSent());
     }
 
     /**
@@ -73,17 +79,12 @@ public class SendMessageTest {
      *     vi i vores SD når til object creation og derfor ikke bruger datotid parametret.
      *     Vi tillader ikke beskeder kun at indeholde whitespaces.
      */
-    @Test (expected = UgyldigBeskedException)
-    public void sendBesked_tc4(){
-        Patient patient = new Patient ("Tom Jensen");
-        Beskedhistorik beskedhistorik = new Beskedhistorik(patient);
+    @Test (expected = InvalidMessageException.class)
+    public void sendMessage_tc4() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException, DateIsNullException {
+        Patient patient = new Patient ("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
+        MessageIndex messageIndex = new MessageIndex(patient);
 
-        beskedhistorik.sendBesked(besked, patient);
-
-        Besked besked = new Besked();
-        besked.saetTekst("          ");
-        besked.saetAfsender(patient);
-
+        messageIndex.sendMessage("               ", patient);
     }
 
     /**
@@ -91,16 +92,12 @@ public class SendMessageTest {
      *     vi i vores SD når til object creation og derfor ikke bruger datotid parametret.
      *     Vi skal knytte en patient til en beskedhistorik.
      */
-    @Test (expected = AfsenderErNullException)
-    public void sendBesked_tc5(){
-        Patient patient = new Patient (null);
-        Beskedhistorik beskedhistorik = new Beskedhistorik(patient);
+    @Test (expected = SenderIsNullException.class)
+    public void sendMessage_tc5() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException, DateIsNullException {
+        Patient patient = new Patient("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
+        MessageIndex messageIndex = new MessageIndex(patient);
 
-        Besked besked = new Besked();
-        besked.saetTekst("flot");
-        besked.saetAfsender(patient);
-
-        beskedhistorik.sendBesked(besked, patient);
+        messageIndex.sendMessage("flot", null);
     }
 
     /**
@@ -108,16 +105,16 @@ public class SendMessageTest {
      *     vi i vores SD når til object creation og derfor ikke bruger datotid parametret.
      *     Vi skal have dato på en sendt besked.
      */
-    @Test (expected = DatoErNullException)
-    public void sendBesked_tc6(){
-        Patient patient = new Patient ("Tom Jensen");
-        Beskedhistorik beskedhistorik = new Beskedhistorik(patient);
+    @Test (expected = DateIsNullException.class)
+    public void sendMessage_tc6() throws PatientIsNullException, MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException, DateIsNullException {
+        Patient patient = new Patient ("Tom Jensen", "TestUsername", new Practicioner("Christian Iuul", "TestUsername"));
+        MessageIndex messageIndex = new MessageIndex(patient);
+        messageIndex.sendMessage("flot", patient);
 
-        beskedhistorik.sendBesked(besked, patient);
-
-        Besked besked = new Besked();
-        besked.saetTekst("flot");
-        besked.saetAfsender(patient);
-        besked.saetDatotid(null);
+        Message message = new Message();
+        message.setText("flot");
+        message.setSender(patient);
+        message.setDateTime(null);
+        messageIndex.addMessage(message);
     }
 }

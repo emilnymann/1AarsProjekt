@@ -9,6 +9,7 @@ import dk.frbsportgruppe1.frbsport.model.Message;
 import dk.frbsportgruppe1.frbsport.model.MessageIndex;
 import dk.frbsportgruppe1.frbsport.model.Patient;
 import dk.frbsportgruppe1.frbsport.model.Practicioner;
+import dk.frbsportgruppe1.frbsport.model.exceptions.DateIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.MessageIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.PatientIsNullException;
@@ -17,7 +18,7 @@ public class MessageIndexTest {
 
     @Test
     public void newMessageHistory_tc1() throws PatientIsNullException {
-        Patient patient = new Patient("Tom Jensen",new Practicioner("Christian Iuul"));
+        Patient patient = new Patient("Tom Jensen", "TestUsername",new Practicioner("Christian Iuul", "TestUsername"));
         MessageIndex messageIndex = new MessageIndex(patient);
 
         assertEquals(0, messageIndex.getMessages().size());
@@ -25,8 +26,8 @@ public class MessageIndexTest {
     }
 
     @Test
-    public void addMessage_tc2() throws MessageIsNullException, SenderIsNullException, PatientIsNullException {
-        Patient patient = new Patient("Tom Jensen",new Practicioner("Christian Iuul"));
+    public void addMessage_tc2() throws MessageIsNullException, SenderIsNullException, PatientIsNullException, DateIsNullException {
+        Patient patient = new Patient("Tom Jensen", "TestUsername",new Practicioner("Christian Iuul", "TestUsername"));
 
         Message message = new Message();
         message.setText("tekst");
@@ -44,7 +45,7 @@ public class MessageIndexTest {
 
     @Test(expected = MessageIsNullException.class)
     public void nullMessage_tc3() throws MessageIsNullException, PatientIsNullException {
-        Patient patient = new Patient("Tom Jensen",new Practicioner("Christian Iuul"));
+        Patient patient = new Patient("Tom Jensen", "TestUsername",new Practicioner("Christian Iuul", "TestUsername"));
         Message message = null;
 
         MessageIndex messageIndex = new MessageIndex(patient);
@@ -52,7 +53,7 @@ public class MessageIndexTest {
     }
 
     @Test(expected = SenderIsNullException.class)
-    public void nullSender_tc4() throws MessageIsNullException, SenderIsNullException, PatientIsNullException {
+    public void nullSender_tc4() throws MessageIsNullException, SenderIsNullException, PatientIsNullException, DateIsNullException {
         Patient patient = null;
 
         Message message = new Message();
@@ -72,8 +73,8 @@ public class MessageIndexTest {
     }
 
     @Test
-    public void sortedMessages_tc6() throws MessageIsNullException, SenderIsNullException, PatientIsNullException {
-        Patient patient = new Patient("Tom Jensen",new Practicioner("Christian Iuul"));
+    public void sortedMessages_tc6() throws MessageIsNullException, SenderIsNullException, PatientIsNullException, DateIsNullException {
+        Patient patient = new Patient("Tom Jensen", "TestUsername",new Practicioner("Christian Iuul", "TestUsername"));
         MessageIndex messageIndex = new MessageIndex(patient);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
