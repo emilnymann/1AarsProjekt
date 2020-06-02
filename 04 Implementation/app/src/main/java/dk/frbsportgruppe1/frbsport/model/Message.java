@@ -16,7 +16,7 @@ public class Message implements MessageInterface {
      * Constructoren sætter parametrene text og sender.
      * @param text er den tekst der bliver lagt ind i vores beskedhistorik
      * @param sender er hvem der angiver teksten, så man kan se hvem der har sendt beskeden
-     *                 i beskedhistorik.
+     *               i beskedhistorik.
      */
     public Message(String text, User sender) {
         this.text = text;

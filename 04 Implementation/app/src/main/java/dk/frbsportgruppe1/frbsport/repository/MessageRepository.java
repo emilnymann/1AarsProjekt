@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
@@ -18,7 +20,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -66,6 +70,7 @@ public class MessageRepository implements Observer {
                                     DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
                                     sender[0] = new User(task.getResult().getId(), task.getResult().getString("name"), task.getResult().getString("email"));
                                     Message message = new Message(documentSnapshot.getString("text"), sender[0], LocalDateTime.parse(documentSnapshot.getString("datetime"), formatter));
+                                    message.setSent(true);
                                     messages.add(message);
                                     messageIndex.setMessage(messages);
                                 }
@@ -73,6 +78,44 @@ public class MessageRepository implements Observer {
                         });
                     }
                 }
+            }
+        });
+    }
+
+    /**
+     * Tilføj en besked til et messageIndex og forsøg derefter at sende den til firestore.
+     * @param messageText beskedens tekstindhold.
+     * @param sender brugeren der har afsendt beskeden.
+     * @param messageIndex det messageIndex som beskeden skal tilføjes til.
+     */
+    public void sendMessage(String messageText, User sender, final MessageIndex messageIndex) {
+
+        final int messageNumber = messageIndex.getMessages().size();
+        Message message = new Message(messageText, sender, LocalDateTime.now());
+        message.setSent(false);
+        try {
+            messageIndex.addMessage(message);
+        } catch (MessageIsNullException e) {
+            e.printStackTrace();
+        }
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("datetime", message.getDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        data.put("sender", sender.getId());
+        data.put("patient", messageIndex.getPatient().getId());
+        data.put("text", messageText);
+
+        db.collection("messages").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                ArrayList<Message> messages = messageIndex.getMessages();
+                messages.get(messageNumber).setSent(true);
+                messageIndex.setMessage(messages);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: send message failed");
             }
         });
     }

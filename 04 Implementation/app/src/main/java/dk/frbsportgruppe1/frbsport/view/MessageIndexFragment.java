@@ -72,7 +72,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
 
             viewModel = new MessageIndexViewModel(messageIndex);
             viewModel.addObserver(this);
-            MessageRepository messageRepository = new MessageRepository(messageIndex);
+            final MessageRepository messageRepository = new MessageRepository(messageIndex);
             messageRepository.populateMessageIndex(messageIndex);
 
             /**
@@ -83,16 +83,10 @@ public class MessageIndexFragment extends Fragment implements Observer {
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                     if (actionId == EditorInfo.IME_ACTION_SEND) {
-                        try {
-                            messageIndex.sendMessage(v.getText().toString(), patient);
-                            v.setText("");
-                        } catch (MessageTooLongException | MessageIsNullException | InvalidMessageException | SenderIsNullException | DateIsNullException e) {
-                            e.printStackTrace();
-                        }
-
+                        messageRepository.sendMessage(v.getText().toString(), patient, messageIndex);
+                        v.setText("");
                         return true;
                     }
-
                     return false;
                 }
             });
@@ -103,12 +97,8 @@ public class MessageIndexFragment extends Fragment implements Observer {
             chatTextInputLayout.setEndIconOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try {
-                        messageIndex.sendMessage(chatTextInput.getText().toString(), patient);
-                        chatTextInput.setText("");
-                    } catch (MessageTooLongException | MessageIsNullException | InvalidMessageException | SenderIsNullException | DateIsNullException e) {
-                        e.printStackTrace();
-                    }
+                    messageRepository.sendMessage(chatTextInput.getText().toString(), patient, messageIndex);
+                    chatTextInput.setText("");
                 }
             });
 
