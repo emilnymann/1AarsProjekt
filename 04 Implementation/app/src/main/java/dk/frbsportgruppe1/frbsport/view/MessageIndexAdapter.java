@@ -87,8 +87,15 @@ public class MessageIndexAdapter extends RecyclerView.Adapter<MessageIndexAdapte
                 message.getDateTime().getHour() +
                 ":" + message.getDateTime().getMinute();
 
-        holder.textViewMessageInfo.setText(messageInfo);
+        if (!message.isSent()) {
+            holder.textViewMessageInfo.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.design_default_color_error));
+            holder.textViewMessageInfo.setText("Ikke afsendt...");
+        } else {
+            holder.textViewMessageInfo.setText(messageInfo);
+        }
+
         holder.textViewMessageText.setText(message.getText());
+
     }
 
     @Override
