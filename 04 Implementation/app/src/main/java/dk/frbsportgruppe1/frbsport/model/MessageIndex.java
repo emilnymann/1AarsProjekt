@@ -2,6 +2,7 @@ package dk.frbsportgruppe1.frbsport.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Observable;
 
 import dk.frbsportgruppe1.frbsport.model.exceptions.DateIsNullException;
@@ -68,8 +69,13 @@ public class MessageIndex extends Observable implements MessageIndexInterface {
         }
     }
 
+    /**
+     * angiv en ArrayList af Message til en messageIndex
+     * @param messages en liste af Message
+     */
     public void setMessage(ArrayList<Message> messages) {
         this.messages = messages;
+        Collections.sort(this.messages, new SortMessages());
         setChanged();
         notifyObservers(this);
     }
