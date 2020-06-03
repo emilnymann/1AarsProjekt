@@ -1,23 +1,23 @@
 package dk.frbsportgruppe1.frbsport.view;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import androidx.preference.PreferenceManager;
 
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 import dk.frbsportgruppe1.frbsport.R;
 
-public class PatientMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
+public class PatientMainActivity extends FragmentActivity implements BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
 
     BottomNavigationView bottomNavigationView;
+    ViewPager2 patientMainViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,8 @@ public class PatientMainActivity extends AppCompatActivity implements BottomNavi
         setContentView(R.layout.activity_patientmain);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        patientMainViewPager = findViewById(R.id.patientMainViewPager);
+        patientMainViewPager.setAdapter(new PaitentMainViewPagerAdapter(this));
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
 
@@ -39,16 +41,13 @@ public class PatientMainActivity extends AppCompatActivity implements BottomNavi
         if (bottomNavigationView.getSelectedItemId() != item.getItemId()) {
             switch (item.getItemId()) {
                 case R.id.menuitem_beskeder:
-                    Fragment beskedhistorikFragment = new MessageIndexFragment();
-                    navigateToFragment(beskedhistorikFragment);
+                    patientMainViewPager.setCurrentItem(0);
                     return true;
                 case R.id.menuitem_booking:
-                    Fragment bookingFragment = new BookingFragment();
-                    navigateToFragment(bookingFragment);
+                    patientMainViewPager.setCurrentItem(1);
                     return true;
                 case R.id.menuitem_kalender:
-                    Fragment kalenderFragment = new KalenderFragment();
-                    navigateToFragment(kalenderFragment);
+                    patientMainViewPager.setCurrentItem(2);
                     return true;
                 default:
                     return false;
@@ -63,15 +62,5 @@ public class PatientMainActivity extends AppCompatActivity implements BottomNavi
     @Override
     public void onNavigationItemReselected(@NonNull MenuItem item) {
 
-    }
-
-    /**
-     * Udskifter denne activity's fragment container.
-     * @param fragment Den fragment som skal vises
-     */
-    private void navigateToFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.patientMainFragment, fragment);
-        transaction.commit();
     }
 }
