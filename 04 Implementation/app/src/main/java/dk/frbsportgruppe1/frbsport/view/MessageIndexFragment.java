@@ -31,6 +31,7 @@ import dk.frbsportgruppe1.frbsport.model.Message;
 import dk.frbsportgruppe1.frbsport.model.MessageIndex;
 import dk.frbsportgruppe1.frbsport.model.Patient;
 import dk.frbsportgruppe1.frbsport.model.Practicioner;
+import dk.frbsportgruppe1.frbsport.model.SessionManager;
 import dk.frbsportgruppe1.frbsport.model.exceptions.DateIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.InvalidMessageException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.MessageIsNullException;
@@ -52,7 +53,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
     ProgressBar messageIndexProgressBar;
 
     public MessageIndexFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -66,8 +67,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
         chatTextInputLayout = rootView.findViewById(R.id.chatTextInputLayout);
 
         try {
-            Practicioner practicioner = new Practicioner("5MHVmLMEtAR6zgaim592g511WO42", "Christian Iuul", "testprac@frbsport.dk");
-            final Patient patient = new Patient("OEpnnZr5yNWYHhD81nNkastoYLG3", "Emil Nymann", "emil491c@edu.easj.dk", practicioner); // skal ikke laves her, skal hentes fra app context
+            final Patient patient = (Patient)SessionManager.getInstance().getCurrentUser();
             final MessageIndex messageIndex = new MessageIndex(patient);
 
             viewModel = new MessageIndexViewModel(messageIndex);
