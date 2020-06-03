@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.UserRecoverableException;
@@ -38,10 +40,14 @@ public class LoginActivity extends AppCompatActivity implements Observer {
     private Button loginButton;
     private TextInputEditText textInputEmail;
     private TextInputEditText textInputPassword;
+    private LinearLayout loginLinearLayout;
+    private ProgressBar loginProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
         final UserRepository userRepository = new UserRepository(this);
@@ -50,13 +56,16 @@ public class LoginActivity extends AppCompatActivity implements Observer {
 
         if (user != null) {
             userRepository.signInSession(user);
+        } else {
+            loginProgressBar.setVisibility(View.INVISIBLE);
+            loginLinearLayout.setVisibility(View.VISIBLE);
         }
-
-        setContentView(R.layout.activity_login);
 
         loginButton = findViewById(R.id.loginButton);
         textInputEmail = findViewById(R.id.loginEmailInput);
         textInputPassword = findViewById(R.id.loginPasswordInput);
+        loginLinearLayout = findViewById(R.id.loginLinearLayout);
+        loginProgressBar = findViewById(R.id.loginProgressBar);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
