@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.common.UserRecoverableException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -35,7 +34,7 @@ public class LoginActivity extends AppCompatActivity implements Observer {
 
     private static final String TAG = "LoginActivity";
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth auth;
 
     private Button loginButton;
     private TextInputEditText textInputEmail;
@@ -49,10 +48,16 @@ public class LoginActivity extends AppCompatActivity implements Observer {
 
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
+        loginButton = findViewById(R.id.loginButton);
+        textInputEmail = findViewById(R.id.loginEmailInput);
+        textInputPassword = findViewById(R.id.loginPasswordInput);
+        loginLinearLayout = findViewById(R.id.loginLinearLayout);
+        loginProgressBar = findViewById(R.id.loginProgressBar);
+
+        auth = FirebaseAuth.getInstance();
         final UserRepository userRepository = new UserRepository(this);
 
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = auth.getCurrentUser();
 
         if (user != null) {
             userRepository.signInSession(user);
@@ -60,12 +65,6 @@ public class LoginActivity extends AppCompatActivity implements Observer {
             loginProgressBar.setVisibility(View.INVISIBLE);
             loginLinearLayout.setVisibility(View.VISIBLE);
         }
-
-        loginButton = findViewById(R.id.loginButton);
-        textInputEmail = findViewById(R.id.loginEmailInput);
-        textInputPassword = findViewById(R.id.loginPasswordInput);
-        loginLinearLayout = findViewById(R.id.loginLinearLayout);
-        loginProgressBar = findViewById(R.id.loginProgressBar);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements Observer {
      * @param password password til at logge ind
      */
     private void signIn(String email, String password, final UserRepository userRepository) {
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
