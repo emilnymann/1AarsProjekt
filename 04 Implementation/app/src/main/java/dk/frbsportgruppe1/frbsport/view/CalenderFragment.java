@@ -14,9 +14,9 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 
 import dk.frbsportgruppe1.frbsport.R;
 
-public class KalenderFragment extends Fragment {
+public class CalenderFragment extends Fragment {
 
-    public KalenderFragment() {
+    public CalenderFragment() {
         // Required empty public constructor
     }
 

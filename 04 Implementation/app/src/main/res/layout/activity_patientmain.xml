@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".view.PatientMainActivity">
 
-    <fragment
-        android:id="@+id/patientMainFragment"
-        android:name="dk.frbsportgruppe1.frbsport.view.MessageIndexFragment"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/patientMainViewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
