@@ -1,9 +1,7 @@
 package dk.frbsportgruppe1.frbsport.view;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
@@ -26,7 +24,7 @@ public class PatientMainActivity extends FragmentActivity implements BottomNavig
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         patientMainViewPager = findViewById(R.id.patientMainViewPager);
-        patientMainViewPager.setAdapter(new PaitentMainViewPagerAdapter(this));
+        patientMainViewPager.setAdapter(new PatientMainViewPagerAdapter(this));
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
 

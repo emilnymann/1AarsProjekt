@@ -5,5 +5,5 @@ import dk.frbsportgruppe1.frbsport.model.User;
 
 public interface MessageRepository {
     void populateMessageIndex(MessageIndex messageIndex);
-    void sendMessage(String messageText, User sender, MessageIndex messageIndex);
+    void sendMessage(String messageText, User sender);
 }

@@ -11,7 +11,7 @@ import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
 public interface MessageIndex {
 
     void addMessage(Message message) throws MessageIsNullException;
-    void sendMessage(String message, User sender) throws MessageTooLongException, MessageIsNullException, InvalidMessageException, SenderIsNullException, DateIsNullException;
+    void removeMessage(Message message);
     void setMessages(ArrayList<Message> messages);
     ArrayList<Message> getMessages();
     Patient getPatient();

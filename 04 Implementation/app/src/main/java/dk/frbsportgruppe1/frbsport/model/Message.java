@@ -10,6 +10,8 @@ import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
  */
 public interface Message {
 
+    String getId();
+
     /**
      * Denne metode bliver implementeret i besked klassen og metodens body udfyldes der
      * @param text er en string som brugeren af appen angiver. Den tekst sendes igennem

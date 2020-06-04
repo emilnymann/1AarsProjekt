@@ -6,6 +6,7 @@ import dk.frbsportgruppe1.frbsport.model.exceptions.DateIsNullException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
 
 public class MessageImpl implements Message {
+    private String id;
     private String text;
     private User sender;
     private LocalDateTime dateTime;
@@ -18,12 +19,14 @@ public class MessageImpl implements Message {
      * @param sender er hvem der angiver teksten, så man kan se hvem der har sendt beskeden
      *               i beskedhistorik.
      */
-    public MessageImpl(String text, User sender) {
+    public MessageImpl(String id, String text, User sender) {
+        this.id = id;
         this.text = text;
         this.sender = sender;
     }
 
-    public MessageImpl(String text, User sender, LocalDateTime dateTime) {
+    public MessageImpl(String id, String text, User sender, LocalDateTime dateTime) {
+        this.id = id;
         this.text = text;
         this.sender = sender;
         this.dateTime = dateTime;
@@ -33,6 +36,11 @@ public class MessageImpl implements Message {
      * Dette er en no-arg constructor da vi skal kunne lave et objekt uden at give den parametre
      */
     public MessageImpl() {
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
     /**
