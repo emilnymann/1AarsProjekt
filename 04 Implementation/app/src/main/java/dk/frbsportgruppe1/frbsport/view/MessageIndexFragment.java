@@ -66,7 +66,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
 
             viewModel = new MessageIndexViewModel(messageIndex);
             viewModel.addObserver(this);
-            final MessageRepository messageRepository = new MessageRepositoryImpl();
+            final MessageRepositoryImpl messageRepository = new MessageRepositoryImpl();
             messageRepository.populateMessageIndex(messageIndex);
 
             chatTextInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -74,7 +74,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                     if (actionId == EditorInfo.IME_ACTION_SEND) {
-                        messageRepository.sendMessage(v.getText().toString(), patient, messageIndex);
+                        messageRepository.sendMessage(v.getText().toString(), patient);
                         v.setText("");
                         return true;
                     }
@@ -85,7 +85,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
             chatTextInputLayout.setEndIconOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    messageRepository.sendMessage(chatTextInput.getText().toString(), patient, messageIndex);
+                    messageRepository.sendMessage(chatTextInput.getText().toString(), patient);
                     chatTextInput.setText("");
                 }
             });
