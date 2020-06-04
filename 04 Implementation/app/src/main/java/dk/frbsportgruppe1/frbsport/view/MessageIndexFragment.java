@@ -3,7 +3,6 @@ package dk.frbsportgruppe1.frbsport.view;
 
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,13 +12,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -29,16 +26,13 @@ import java.util.Observer;
 import dk.frbsportgruppe1.frbsport.R;
 import dk.frbsportgruppe1.frbsport.model.Message;
 import dk.frbsportgruppe1.frbsport.model.MessageIndex;
+import dk.frbsportgruppe1.frbsport.model.MessageIndexImpl;
 import dk.frbsportgruppe1.frbsport.model.Patient;
-import dk.frbsportgruppe1.frbsport.model.Practicioner;
+import dk.frbsportgruppe1.frbsport.model.PatientImpl;
 import dk.frbsportgruppe1.frbsport.model.SessionManager;
-import dk.frbsportgruppe1.frbsport.model.exceptions.DateIsNullException;
-import dk.frbsportgruppe1.frbsport.model.exceptions.InvalidMessageException;
-import dk.frbsportgruppe1.frbsport.model.exceptions.MessageIsNullException;
-import dk.frbsportgruppe1.frbsport.model.exceptions.MessageTooLongException;
 import dk.frbsportgruppe1.frbsport.model.exceptions.PatientIsNullException;
-import dk.frbsportgruppe1.frbsport.model.exceptions.SenderIsNullException;
 import dk.frbsportgruppe1.frbsport.repository.MessageRepository;
+import dk.frbsportgruppe1.frbsport.repository.MessageRepositoryImpl;
 import dk.frbsportgruppe1.frbsport.viewmodel.MessageIndexViewModel;
 
 public class MessageIndexFragment extends Fragment implements Observer {
@@ -68,16 +62,13 @@ public class MessageIndexFragment extends Fragment implements Observer {
 
         try {
             final Patient patient = (Patient)SessionManager.getInstance().getCurrentUser();
-            final MessageIndex messageIndex = new MessageIndex(patient);
+            final MessageIndexImpl messageIndex = new MessageIndexImpl(patient);
 
             viewModel = new MessageIndexViewModel(messageIndex);
             viewModel.addObserver(this);
-            final MessageRepository messageRepository = new MessageRepository(messageIndex);
+            final MessageRepository messageRepository = new MessageRepositoryImpl();
             messageRepository.populateMessageIndex(messageIndex);
 
-            /**
-             * Event listener til når der trykkes på send i Android software keyboardet.
-             */
             chatTextInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -91,9 +82,6 @@ public class MessageIndexFragment extends Fragment implements Observer {
                 }
             });
 
-            /**
-             * Event listener til når der trykkes på chat input send ikonet.
-             */
             chatTextInputLayout.setEndIconOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -113,7 +101,6 @@ public class MessageIndexFragment extends Fragment implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         ArrayList<Message> messages = viewModel.getMessages();
-        Log.d(TAG, "update: Got messages from viewmodel. " + messages.get(0).getText() + ", " + messages.get(0).getDateTime().toString());
 
         MessageIndexAdapter messageIndexAdapter = new MessageIndexAdapter(messages);
         recyclerViewMessages.setAdapter(messageIndexAdapter);

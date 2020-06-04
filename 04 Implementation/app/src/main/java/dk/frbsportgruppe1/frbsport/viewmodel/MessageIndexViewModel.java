@@ -7,7 +7,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import dk.frbsportgruppe1.frbsport.model.Message;
-import dk.frbsportgruppe1.frbsport.model.MessageIndex;
+import dk.frbsportgruppe1.frbsport.model.MessageIndexImpl;
 
 public class MessageIndexViewModel extends Observable implements Observer {
 
@@ -15,7 +15,7 @@ public class MessageIndexViewModel extends Observable implements Observer {
 
     private ArrayList<Message> messages;
 
-    public MessageIndexViewModel(MessageIndex messageIndex) {
+    public MessageIndexViewModel(Observable messageIndex) {
         messages = new ArrayList<>();
         messageIndex.addObserver(this);
     }
@@ -27,8 +27,8 @@ public class MessageIndexViewModel extends Observable implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         Log.d(TAG, "update: viewmodel notified");
-        MessageIndex messageIndex = (MessageIndex) arg;
-        messages = messageIndex.getMessages();
+        MessageIndexImpl messageIndexImpl = (MessageIndexImpl) arg;
+        messages = messageIndexImpl.getMessages();
 
         setChanged();
         notifyObservers();

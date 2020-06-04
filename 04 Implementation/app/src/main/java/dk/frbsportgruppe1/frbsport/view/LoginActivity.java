@@ -24,11 +24,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 import dk.frbsportgruppe1.frbsport.R;
-import dk.frbsportgruppe1.frbsport.model.Patient;
-import dk.frbsportgruppe1.frbsport.model.Practicioner;
+import dk.frbsportgruppe1.frbsport.model.PatientImpl;
+import dk.frbsportgruppe1.frbsport.model.PractitionerImpl;
 import dk.frbsportgruppe1.frbsport.model.SessionManager;
 import dk.frbsportgruppe1.frbsport.model.User;
-import dk.frbsportgruppe1.frbsport.repository.UserRepository;
+import dk.frbsportgruppe1.frbsport.repository.UserRepositoryImpl;
 
 public class LoginActivity extends AppCompatActivity implements Observer {
 
@@ -55,12 +55,12 @@ public class LoginActivity extends AppCompatActivity implements Observer {
         loginProgressBar = findViewById(R.id.loginProgressBar);
 
         auth = FirebaseAuth.getInstance();
-        final UserRepository userRepository = new UserRepository(this);
+        final UserRepositoryImpl userRepositoryImpl = new UserRepositoryImpl(this);
 
         FirebaseUser user = auth.getCurrentUser();
 
         if (user != null) {
-            userRepository.signInSession(user);
+            userRepositoryImpl.signInSession(user);
         } else {
             loginProgressBar.setVisibility(View.INVISIBLE);
             loginLinearLayout.setVisibility(View.VISIBLE);
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements Observer {
                 String email = textInputEmail.getText().toString();
                 String password = textInputPassword.getText().toString();
 
-                signIn(email, password, userRepository);
+                signIn(email, password, userRepositoryImpl);
             }
         });
     }
@@ -82,13 +82,13 @@ public class LoginActivity extends AppCompatActivity implements Observer {
      * @param email email til at logge ind med
      * @param password password til at logge ind
      */
-    private void signIn(String email, String password, final UserRepository userRepository) {
+    private void signIn(String email, String password, final UserRepositoryImpl userRepositoryImpl) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "onComplete: login success");
-                    userRepository.signInSession(task.getResult().getUser());
+                    userRepositoryImpl.signInSession(task.getResult().getUser());
                 } else {
                     Log.d(TAG, "onComplete: login fail");
                     Toast toast = Toast.makeText(LoginActivity.this, "Kunne ikke logge ind.", Toast.LENGTH_SHORT);
@@ -105,9 +105,9 @@ public class LoginActivity extends AppCompatActivity implements Observer {
         User user = SessionManager.getInstance().getCurrentUser();
         Intent intent = new Intent();
 
-        if (user.getClass() == Patient.class) {
+        if (user.getClass() == PatientImpl.class) {
             intent = new Intent(this, PatientMainActivity.class);
-        } else if (user.getClass() == Practicioner.class) {
+        } else if (user.getClass() == PractitionerImpl.class) {
             Log.d(TAG, "update: logged in practitioner.");
         } else {
             Log.d(TAG, "update: logged in: invalid user class");
