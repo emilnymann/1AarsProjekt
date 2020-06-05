@@ -1,5 +1,6 @@
 package dk.frbsportgruppe1.frbsport.view;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,12 @@ import dk.frbsportgruppe1.frbsport.model.Patient;
 public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapter.ViewHolder> {
     private List<Patient> patients;
     private FirebaseAuth auth;
+    private OnItemClickListener mOnItemClickListener;
+    private final String TAG = "PatientIndexAdapter";
 
-    public PatientIndexAdapter(List<Patient> patients) {
+    public PatientIndexAdapter(List<Patient> patients, OnItemClickListener onItemClickListener) {
         this.patients = patients;
+        this.mOnItemClickListener = onItemClickListener;
         auth = FirebaseAuth.getInstance();
     }
 
@@ -33,8 +37,7 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_layout, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view, mOnItemClickListener);
     }
 
     //TODO
@@ -57,20 +60,34 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
         return position;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView patientNameTextView;
         TextView patientLastMessageTextView;
         ConstraintLayout patientConstraintLayout;
         MaterialCardView materialCardView;
 
-        public ViewHolder(@NonNull View itemView) {
+        OnItemClickListener onItemClickListener;
+
+        public ViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
 
             this.patientNameTextView = itemView.findViewById(R.id.patientNameTextView);
             this.patientLastMessageTextView = itemView.findViewById(R.id.patientLastMessageTextView);
             this.patientConstraintLayout = itemView.findViewById(R.id.patientConstraintLayout);
             this.materialCardView = itemView.findViewById(R.id.patientCardView);
+            this.onItemClickListener = onItemClickListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onItemClickListener.onItemClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
     }
 }

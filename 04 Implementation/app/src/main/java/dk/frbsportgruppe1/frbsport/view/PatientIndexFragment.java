@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -25,12 +28,14 @@ import dk.frbsportgruppe1.frbsport.repository.PatientRepository;
 import dk.frbsportgruppe1.frbsport.repository.PatientRepositoryImpl;
 import dk.frbsportgruppe1.frbsport.viewmodel.PatientIndexViewModel;
 
-public class PatientIndexFragment extends Fragment implements Observer {
+public class PatientIndexFragment extends Fragment implements Observer, PatientIndexAdapter.OnItemClickListener {
     private static final String TAG = "PatientIndexView";
 
     private PatientIndexViewModel viewModel;
+    private ArrayList<Patient> patients = new ArrayList<>();
 
     RecyclerView recyclerViewPatients;
+    MaterialCardView materialCardView;
 
     public PatientIndexFragment() {
 
@@ -60,10 +65,16 @@ public class PatientIndexFragment extends Fragment implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         ArrayList<Patient> patients = viewModel.getPatients();
-
-        PatientIndexAdapter patientIndexAdapter = new PatientIndexAdapter(patients);
-        recyclerViewPatients.setAdapter(patientIndexAdapter);
         recyclerViewPatients.setLayoutManager(new LinearLayoutManager(getContext()));
+        PatientIndexAdapter patientIndexAdapter = new PatientIndexAdapter(patients, this);
+        recyclerViewPatients.setAdapter(patientIndexAdapter);
 
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Patient patient = patients.get(position);
+        System.out.println(patient.getEmail());
+        Log.d(TAG, "onItemClick: clicked");
     }
 }
