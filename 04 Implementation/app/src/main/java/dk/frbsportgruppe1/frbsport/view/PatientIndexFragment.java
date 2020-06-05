@@ -71,6 +71,7 @@ public class PatientIndexFragment extends Fragment implements Observer, PatientI
 
     }
 
+    //TODO: få den til at registrere klik fra adapter
     @Override
     public void onItemClick(int position) {
         Patient patient = patients.get(position);
