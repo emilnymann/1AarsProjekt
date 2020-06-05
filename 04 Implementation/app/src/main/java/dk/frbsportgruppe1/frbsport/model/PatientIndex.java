@@ -12,4 +12,5 @@ public interface PatientIndex {
     public void setPractitioner(Practitioner practitioner) throws PractitionerIsNullException;
     public void addPatient(Patient patient) throws PatientIsNullException;
     public ArrayList<Patient> getPatients();
+    Practitioner getPractitioner();
 }
