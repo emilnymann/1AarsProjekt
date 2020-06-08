@@ -21,7 +21,7 @@ public class PractiotionerMainViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new BookingFragment();
             case 2:
-                return new CalenderFragment();
+                return new CalendarFragment();
             default:
                 return null;
         }

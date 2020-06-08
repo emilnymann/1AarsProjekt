@@ -81,7 +81,6 @@ public class PatientIndexFragment extends Fragment implements Observer, PatientI
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this.getContext(), "Click on item" + position, Toast.LENGTH_SHORT).show();
         Patient patient = patientIndexAdapter.getPatients().get(position);
         getChildFragmentManager().beginTransaction().replace(R.id.patientIndexConstraintLayout, new MessageIndexFragment(patient)).addToBackStack("patientIndex").commit();
     }
