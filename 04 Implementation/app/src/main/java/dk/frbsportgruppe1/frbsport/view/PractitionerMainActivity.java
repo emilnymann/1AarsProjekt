@@ -16,6 +16,10 @@ public class PractitionerMainActivity extends FragmentActivity implements Bottom
     ViewPager2 practitionerMainViewPager;
     private static final String TAG = "PractitionerMainActivity";
 
+    /**
+     * Hvilket view der vises når denne klasse instantieres. eller bliver kaldt i en Intent
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +31,11 @@ public class PractitionerMainActivity extends FragmentActivity implements Bottom
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
 
+    /**
+     * Denne metode håndtere hvilken item der trykkes på nede i bottomnavigatino bar.
+     * @param item Der bruges en Menuitem, hvor der kigges på hvilken en der trykkes på.
+     * @return
+     */
     //TODO: Disse skal passe til practiotioner og ikke tage på patient delen.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

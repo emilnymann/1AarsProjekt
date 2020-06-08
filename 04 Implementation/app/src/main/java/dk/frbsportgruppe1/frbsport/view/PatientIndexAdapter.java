@@ -1,27 +1,20 @@
 package dk.frbsportgruppe1.frbsport.view;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
-import java.util.concurrent.BlockingDeque;
 
 import dk.frbsportgruppe1.frbsport.R;
 import dk.frbsportgruppe1.frbsport.model.Patient;
@@ -36,12 +29,24 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
     private ItemClickListener mItemClickListener;
 
 
+    /**
+     * Constructoren til PatientIndexAdapter
+     * @param context her referes der til den state programmet er i.
+     * @param patients bare en liste af patienter.
+     */
     public PatientIndexAdapter(Context context, List<Patient> patients) {
         this.context = context;
         this.patients = patients;
         auth = FirebaseAuth.getInstance();
     }
 
+
+    /**
+     * Denne bliver kaldt når adapteren inflates i PatientIndexFragmentet/recyclerviewet.
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,6 +55,11 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
         return viewHolder;
     }
 
+    /**
+     * Det er her man kan håndtere hvilken data der skal fyldes i hvert view.
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Patient patient = patients.get(position);
@@ -75,6 +85,9 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
         return position;
     }
 
+    /**
+     * Denne indre klasse sørger for at hvert view er instantieret.
+     */
     class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView patientNameTextView;
@@ -91,14 +104,18 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
             this.patientLastMessageTextView = itemView.findViewById(R.id.patientLastMessageTextView);
             this.patientConstraintLayout = itemView.findViewById(R.id.patientConstraintLayout);
             this.materialCardView = itemView.findViewById(R.id.patientCardView);
-            this.showMessageIndexButton = itemView.findViewById(R.id.toMessageIndexButton);
+            this.showMessageIndexButton = itemView.findViewById(R.id.showMessageIndexButton);
         }
 
     }
+
     public void addItemClickListener(ItemClickListener listener) {
         mItemClickListener = listener;
     }
 
+    /**
+     * et lokalt interface der bruges for at håndtere klik på knappen showMessageIndexButton i andre klasser
+     */
     public interface ItemClickListener {
         void onItemClick(int position);
     }

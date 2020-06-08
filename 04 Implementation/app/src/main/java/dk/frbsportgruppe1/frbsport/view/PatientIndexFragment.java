@@ -42,15 +42,19 @@ public class PatientIndexFragment extends Fragment implements Observer, PatientI
 
     RecyclerView recyclerViewPatients;
 
-    public PatientIndexFragment() {
+    public PatientIndexFragment() {}
 
-    }
-
+    /**
+     * Denne metode kaldes når dette fragment bliver lavet.
+     * @param inflater man inflater den activity der skal vises med .inflate.
+     * @param container er af typen ViewGroup, som er et view der indeholder andre views.
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_patient_index, container, false);
         recyclerViewPatients = rootView.findViewById(R.id.patientIndexRecyclerView);
-
 
         try {
             final Practitioner practitioner = (Practitioner) SessionManager.getInstance().getCurrentUser();
@@ -68,6 +72,11 @@ public class PatientIndexFragment extends Fragment implements Observer, PatientI
         return rootView;
     }
 
+    /**
+     * update bliver kaldt når der ændres i klasserne der implementere Observable og kalder setChanged() og notifyObservers()
+     * @param o
+     * @param arg
+     */
 
     @Override
     public void update(Observable o, Object arg) {
@@ -79,6 +88,10 @@ public class PatientIndexFragment extends Fragment implements Observer, PatientI
 
     }
 
+    /**
+     * Denne metode implementeres fra Patientindexadapteren og håndterer hvad der sker når man trykker på knappen i PatientIndexAdapteren.
+     * @param position tager imod en position fra det objekt der er trykket på i recyclerview
+     */
     @Override
     public void onItemClick(int position) {
         Patient patient = patientIndexAdapter.getPatients().get(position);

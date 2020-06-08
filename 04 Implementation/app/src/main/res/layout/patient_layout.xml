@@ -52,7 +52,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/toMessageIndexButton"
+                android:id="@+id/showMessageIndexButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
