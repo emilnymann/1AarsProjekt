@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.api.LogDescriptor;
@@ -30,16 +33,17 @@ import dk.frbsportgruppe1.frbsport.repository.PatientRepository;
 import dk.frbsportgruppe1.frbsport.repository.PatientRepositoryImpl;
 import dk.frbsportgruppe1.frbsport.viewmodel.PatientIndexViewModel;
 
-public class PatientIndexFragment extends Fragment implements Observer {
+public class PatientIndexFragment extends Fragment implements Observer, PatientIndexAdapter.ItemClickListener {
     private static final String TAG = "PatientIndexView";
 
     private PatientIndexViewModel viewModel;
     private ArrayList<Patient> patients = new ArrayList<>();
+    private PatientIndexAdapter patientIndexAdapter;
 
     RecyclerView recyclerViewPatients;
-    PatientIndexAdapter mPatientIndexAdapter;
 
     public PatientIndexFragment() {
+
     }
 
     @Override
@@ -65,12 +69,21 @@ public class PatientIndexFragment extends Fragment implements Observer {
     }
 
 
-
     @Override
     public void update(Observable o, Object arg) {
         ArrayList<Patient> patients = viewModel.getPatients();
         recyclerViewPatients.setLayoutManager(new LinearLayoutManager(getContext()));
-        PatientIndexAdapter patientIndexAdapter = new PatientIndexAdapter(patients, this.getContext());
+        patientIndexAdapter = new PatientIndexAdapter(this.getContext(), patients);
+        patientIndexAdapter.addItemClickListener(this);
         recyclerViewPatients.setAdapter(patientIndexAdapter);
+
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(this.getContext(), "Click on item" + position, Toast.LENGTH_SHORT).show();
+        Patient patient = patientIndexAdapter.getPatients().get(position);
+        getChildFragmentManager().beginTransaction().replace(R.id.patientIndexConstraintLayout, new MessageIndexFragment(patient)).commit();
+
     }
 }

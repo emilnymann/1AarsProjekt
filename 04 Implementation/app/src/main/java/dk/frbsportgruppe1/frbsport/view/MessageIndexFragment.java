@@ -45,8 +45,14 @@ public class MessageIndexFragment extends Fragment implements Observer {
     EditText chatTextInput;
     TextInputLayout chatTextInputLayout;
     ProgressBar messageIndexProgressBar;
+    Patient patient;
 
     public MessageIndexFragment() {
+
+    }
+
+    public MessageIndexFragment(Patient patient) {
+        this.patient = patient;
 
     }
 
@@ -61,7 +67,9 @@ public class MessageIndexFragment extends Fragment implements Observer {
         chatTextInputLayout = rootView.findViewById(R.id.chatTextInputLayout);
 
         try {
-            final Patient patient = (Patient)SessionManager.getInstance().getCurrentUser();
+            if (patient == null) {
+                patient = (Patient)SessionManager.getInstance().getCurrentUser();
+            }
             final MessageIndexImpl messageIndex = new MessageIndexImpl(patient);
 
             viewModel = new MessageIndexViewModel(messageIndex);
@@ -74,7 +82,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                     if (actionId == EditorInfo.IME_ACTION_SEND) {
-                        messageRepository.sendMessage(v.getText().toString(), patient);
+                        messageRepository.sendMessage(v.getText().toString(), SessionManager.getInstance().getCurrentUser(), patient);
                         v.setText("");
                         return true;
                     }
@@ -85,7 +93,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
             chatTextInputLayout.setEndIconOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    messageRepository.sendMessage(chatTextInput.getText().toString(), patient);
+                    messageRepository.sendMessage(chatTextInput.getText().toString(), SessionManager.getInstance().getCurrentUser(), patient);
                     chatTextInput.setText("");
                 }
             });
@@ -93,6 +101,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
         } catch (PatientIsNullException e) {
             Log.d(TAG, "onCreateView: " + e.getMessage());
         }
+
 
         return rootView;
 

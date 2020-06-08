@@ -31,6 +31,7 @@ import dk.frbsportgruppe1.frbsport.model.Message;
 import dk.frbsportgruppe1.frbsport.model.MessageImpl;
 import dk.frbsportgruppe1.frbsport.model.MessageIndex;
 import dk.frbsportgruppe1.frbsport.model.MessageIndexImpl;
+import dk.frbsportgruppe1.frbsport.model.Patient;
 import dk.frbsportgruppe1.frbsport.model.SessionManager;
 import dk.frbsportgruppe1.frbsport.model.User;
 import dk.frbsportgruppe1.frbsport.model.UserImpl;
@@ -96,12 +97,12 @@ public class MessageRepositoryImpl implements MessageRepository {
      * @param messageText beskedens tekstindhold.
      * @param sender brugeren der har afsendt beskeden.
      */
-    public void sendMessage(String messageText, User sender) {
+    public void sendMessage(String messageText, User sender, Patient patient) {
 
         Map<String, Object> data = new HashMap<>();
         data.put("datetime", LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         data.put("sender", sender.getId());
-        data.put("patient", SessionManager.getInstance().getCurrentUser().getId());
+        data.put("patient", patient.getId());
         data.put("text", messageText);
 
         db.collection("messages").add(data).addOnSuccessListener(documentReference -> {

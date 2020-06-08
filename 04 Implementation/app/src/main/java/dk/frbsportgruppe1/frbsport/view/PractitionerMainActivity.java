@@ -55,11 +55,6 @@ public class PractitionerMainActivity extends FragmentActivity implements Bottom
             return false;
         }
     }
-    public void goToMessageIndex(Patient patient) {
-        Log.d(TAG, "goToMessageIndex: " + patient.getName());
-
-
-    }
 
     @Override
     public void onNavigationItemReselected(@NonNull MenuItem item) {

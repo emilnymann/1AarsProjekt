@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -28,13 +30,15 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
     private List<Patient> patients;
     private FirebaseAuth auth;
     private final String TAG = "PatientIndexAdapter";
-    private int position;
+
     private Context context;
+    private int position;
+    private ItemClickListener mItemClickListener;
 
 
-    public PatientIndexAdapter(List<Patient> patients, Context context) {
-        this.patients = patients;
+    public PatientIndexAdapter(Context context, List<Patient> patients) {
         this.context = context;
+        this.patients = patients;
         auth = FirebaseAuth.getInstance();
     }
 
@@ -42,25 +46,23 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_layout, parent, false);
-        return new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Patient patient = patients.get(position);
-
+        holder.patientNameTextView.setText(patient.getName());
+        holder.patientLastMessageTextView.setText("Jeg tester lige hvad der foregår her");
         holder.showMessageIndexButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (context instanceof PractitionerMainActivity) {
-                    ((PractitionerMainActivity) context).goToMessageIndex(patient);
+                if (mItemClickListener != null) {
+                    mItemClickListener.onItemClick(position);
                 }
             }
         });
-        holder.patientNameTextView.setText(patient.getName());
-        holder.patientLastMessageTextView.setText("Jeg tester lige hvad der foregår her");
-
-
     }
 
     @Override
@@ -73,7 +75,7 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
         return position;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView patientNameTextView;
         TextView patientLastMessageTextView;
@@ -90,8 +92,18 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
             this.patientConstraintLayout = itemView.findViewById(R.id.patientConstraintLayout);
             this.materialCardView = itemView.findViewById(R.id.patientCardView);
             this.showMessageIndexButton = itemView.findViewById(R.id.toMessageIndexButton);
-
         }
+
+    }
+    public void addItemClickListener(ItemClickListener listener) {
+        mItemClickListener = listener;
     }
 
+    public interface ItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public List<Patient> getPatients() {
+        return patients;
+    }
 }
