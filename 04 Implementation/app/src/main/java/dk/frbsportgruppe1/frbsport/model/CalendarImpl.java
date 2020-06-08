@@ -25,7 +25,7 @@ public class CalendarImpl extends Observable implements Calendar{
 
     public void filter(String type) throws FilterTypeIsNullException{
         if(type==null){
-            throw new FilterTypeIsNullException("Ingen filter angivet");
+            throw new FilterTypeIsNullException("Intet filter angivet");
         }else{
             if(type.contentEquals("Booking")){
                 if(isBookingOn){

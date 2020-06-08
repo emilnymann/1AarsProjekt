@@ -1,7 +1,6 @@
 package dk.frbsportgruppe1.frbsport.repository;
 
 import dk.frbsportgruppe1.frbsport.model.Calendar;
-import dk.frbsportgruppe1.frbsport.model.CalendarImpl;
 import dk.frbsportgruppe1.frbsport.model.exceptions.FilterTypeIsNullException;
 
 public class CalendarRepositoryImpl implements CalendarRepository{
@@ -9,7 +8,7 @@ public class CalendarRepositoryImpl implements CalendarRepository{
     private boolean isWorkoutOn=true;
 
     public void populateCalendar(Calendar calendar){
-        //Temp data
+        //Midertidlig data
         calendar.addEvent("Ben øvelser","Workout",2020,5,9);
         calendar.addEvent("Højre arm","Workout",2020,5,10);
         calendar.addEvent("Behandling 45 min.","Booking",2020,5,10,10,00);
@@ -18,7 +17,7 @@ public class CalendarRepositoryImpl implements CalendarRepository{
 
     public void filter(String type) throws FilterTypeIsNullException {
         if(type == null){
-            throw new FilterTypeIsNullException("Ingen filter angivet");
+            throw new FilterTypeIsNullException("Intet filter angivet");
         }else{
             if(type.contentEquals("Booking")){
                 if(isBookingOn){
