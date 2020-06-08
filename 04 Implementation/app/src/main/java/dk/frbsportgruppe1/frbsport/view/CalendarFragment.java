@@ -22,11 +22,13 @@ import dk.frbsportgruppe1.frbsport.model.Calendar;
 import dk.frbsportgruppe1.frbsport.model.CalendarImpl;
 import dk.frbsportgruppe1.frbsport.model.exceptions.FilterTypeIsNullException;
 import dk.frbsportgruppe1.frbsport.repository.CalendarRepositoryImpl;
+import dk.frbsportgruppe1.frbsport.viewmodel.CalendarViewModel;
 
 public class CalendarFragment extends Fragment implements Observer{
 
     private View view;
     private CalendarView cv;
+    private CalendarViewModel calendarViewModel;
 
     public CalendarFragment(){
         // Required empty public constructor
@@ -39,6 +41,8 @@ public class CalendarFragment extends Fragment implements Observer{
         Chip chipWorkout=view.findViewById(R.id.chip2);
         Chip chipBooking=view.findViewById(R.id.chip3);
         CalendarImpl calendar=new CalendarImpl();
+        calendarViewModel=new CalendarViewModel(calendar);
+        calendarViewModel.addObserver(this);
         CalendarRepositoryImpl calendarRepository=new CalendarRepositoryImpl();
         calendarRepository.populateCalendar(calendar);
 
@@ -70,19 +74,6 @@ public class CalendarFragment extends Fragment implements Observer{
 
     @Override
     public void update(Observable o,Object arg){
-        Calendar calendar=(Calendar)arg;
-
-        List<EventDay> eventDayList=new ArrayList<>();
-
-        for(int i=0;i<calendar.getEvents().size();i++){
-            if(calendar.getEvents().get(i).getType().contentEquals("Booking") && calendar.getFilter("Booking")){
-                eventDayList.add(calendar.getEvents().get(i).getEvent());
-            }else if(calendar.getEvents().get(i).getType().contentEquals("Workout") && calendar.getFilter("Workout")){
-                eventDayList.add(calendar.getEvents().get(i).getEvent());
-            }
-        }
-        List<EventDay> eventDayListEmpty=new ArrayList<>();
-        cv.setEvents(eventDayListEmpty);
-        Log.d("Verbose", "update triggeret");
+        cv.setEvents(calendarViewModel.getEventDayList());
     }
 }

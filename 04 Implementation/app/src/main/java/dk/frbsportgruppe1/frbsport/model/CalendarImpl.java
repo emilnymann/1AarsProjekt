@@ -13,10 +13,14 @@ public class CalendarImpl extends Observable implements Calendar{
 
     public void addEvent(String title,String type,int startYear,int startMonth,int startDay){
         events.add(new CalendarEventImpl(title,type,startYear,startMonth,startDay));
+        setChanged();
+        notifyObservers(this);
     }
 
     public void addEvent(String title,String type,int startYear,int startMonth,int startDay,int startHour,int startMinutes){
         events.add(new CalendarEventImpl(title,type,startYear,startMonth,startDay,startHour,startMinutes));
+        setChanged();
+        notifyObservers(this);
     }
 
     public void filter(String type) throws FilterTypeIsNullException{
@@ -27,21 +31,21 @@ public class CalendarImpl extends Observable implements Calendar{
                 if(isBookingOn){
                     isBookingOn=false;
                     setChanged();
-                    notifyObservers();
+                    notifyObservers(this);
                 }else{
                     isBookingOn=true;
                     setChanged();
-                    notifyObservers();
+                    notifyObservers(this);
                 }
             }else if(type.contentEquals("Workout")){
                 if(isWorkoutOn){
                     isWorkoutOn=false;
                     setChanged();
-                    notifyObservers();
+                    notifyObservers(this);
                 }else{
                     isWorkoutOn=true;
                     setChanged();
-                    notifyObservers();
+                    notifyObservers(this);
                 }
             }
         }
