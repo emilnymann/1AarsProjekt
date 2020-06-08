@@ -2,8 +2,6 @@ package dk.frbsportgruppe1.frbsport.model;
 
 import com.applandeo.materialcalendarview.EventDay;
 
-import java.util.Calendar;
-
 import dk.frbsportgruppe1.frbsport.R;
 
 public class CalendarEventImpl implements CalendarEvent{
@@ -25,9 +23,9 @@ public class CalendarEventImpl implements CalendarEvent{
         java.util.Calendar c= java.util.Calendar.getInstance();
         c.set(startYear,startMonth,startDay);
         if(type.contentEquals("Workout")){
-            eventDay=new EventDay(c,R.color.colorPrimary);
+            eventDay=new EventDay(c,R.drawable.calendar_primary_gradient);
         }else{
-            eventDay=new EventDay(c,R.color.colorAccent);
+            eventDay=new EventDay(c,R.drawable.calendar_accent_gradient);
         }
     }
 
@@ -37,9 +35,9 @@ public class CalendarEventImpl implements CalendarEvent{
         java.util.Calendar c=java.util.Calendar.getInstance();
         c.set(startYear,startMonth,startDay,startHour,startMinutes);
         if(type.contentEquals("Workout")){
-            eventDay=new EventDay(c,R.color.colorPrimary);
+            eventDay=new EventDay(c,R.drawable.calendar_primary_gradient);
         }else{
-            eventDay=new EventDay(c,R.color.colorAccent);
+            eventDay=new EventDay(c,R.drawable.calendar_accent_gradient);
         }
     }
 

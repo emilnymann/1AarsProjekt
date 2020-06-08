@@ -18,7 +18,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import dk.frbsportgruppe1.frbsport.R;
-import dk.frbsportgruppe1.frbsport.model.Calendar;
 import dk.frbsportgruppe1.frbsport.model.CalendarImpl;
 import dk.frbsportgruppe1.frbsport.model.exceptions.FilterTypeIsNullException;
 import dk.frbsportgruppe1.frbsport.repository.CalendarRepositoryImpl;
@@ -69,6 +68,12 @@ public class CalendarFragment extends Fragment implements Observer{
         }
         cv.setEvents(eventDayList);
 
+        try{
+            calendar.filter("Workout");
+            calendar.filter("Workout");
+        }catch(FilterTypeIsNullException e){
+            e.printStackTrace();
+        }
         return view;
     }
 
