@@ -1,5 +1,6 @@
 package dk.frbsportgruppe1.frbsport.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.api.LogDescriptor;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -28,23 +30,23 @@ import dk.frbsportgruppe1.frbsport.repository.PatientRepository;
 import dk.frbsportgruppe1.frbsport.repository.PatientRepositoryImpl;
 import dk.frbsportgruppe1.frbsport.viewmodel.PatientIndexViewModel;
 
-public class PatientIndexFragment extends Fragment implements Observer, PatientIndexAdapter.OnItemClickListener {
+public class PatientIndexFragment extends Fragment implements Observer {
     private static final String TAG = "PatientIndexView";
 
     private PatientIndexViewModel viewModel;
     private ArrayList<Patient> patients = new ArrayList<>();
 
     RecyclerView recyclerViewPatients;
-    MaterialCardView materialCardView;
+    PatientIndexAdapter mPatientIndexAdapter;
 
     public PatientIndexFragment() {
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_patient_index, container, false);
         recyclerViewPatients = rootView.findViewById(R.id.patientIndexRecyclerView);
+
 
         try {
             final Practitioner practitioner = (Practitioner) SessionManager.getInstance().getCurrentUser();
@@ -62,20 +64,13 @@ public class PatientIndexFragment extends Fragment implements Observer, PatientI
         return rootView;
     }
 
+
+
     @Override
     public void update(Observable o, Object arg) {
         ArrayList<Patient> patients = viewModel.getPatients();
         recyclerViewPatients.setLayoutManager(new LinearLayoutManager(getContext()));
-        PatientIndexAdapter patientIndexAdapter = new PatientIndexAdapter(patients, this);
+        PatientIndexAdapter patientIndexAdapter = new PatientIndexAdapter(patients, this.getContext());
         recyclerViewPatients.setAdapter(patientIndexAdapter);
-
-    }
-
-    //TODO: få den til at registrere klik fra adapter
-    @Override
-    public void onItemClick(int position) {
-        Patient patient = patients.get(position);
-        System.out.println(patient.getEmail());
-        Log.d(TAG, "onItemClick: clicked");
     }
 }

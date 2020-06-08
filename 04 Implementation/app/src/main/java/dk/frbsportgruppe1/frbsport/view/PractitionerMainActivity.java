@@ -2,6 +2,7 @@ package dk.frbsportgruppe1.frbsport.view;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -13,10 +14,12 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import dk.frbsportgruppe1.frbsport.R;
+import dk.frbsportgruppe1.frbsport.model.Patient;
 
 public class PractitionerMainActivity extends FragmentActivity implements BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
     BottomNavigationView bottomNavigationView;
     ViewPager2 practiotionerMainViewPager;
+    private static final String TAG = "PractitionerMainActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,11 @@ public class PractitionerMainActivity extends FragmentActivity implements Bottom
         else {
             return false;
         }
+    }
+    public void goToMessageIndex(Patient patient) {
+        Log.d(TAG, "goToMessageIndex: " + patient.getName());
+
+
     }
 
     @Override

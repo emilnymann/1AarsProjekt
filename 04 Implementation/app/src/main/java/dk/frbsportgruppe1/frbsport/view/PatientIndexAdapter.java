@@ -1,9 +1,11 @@
 package dk.frbsportgruppe1.frbsport.view;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
 
 import dk.frbsportgruppe1.frbsport.R;
 import dk.frbsportgruppe1.frbsport.model.Patient;
@@ -24,12 +27,14 @@ import dk.frbsportgruppe1.frbsport.model.Patient;
 public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapter.ViewHolder> {
     private List<Patient> patients;
     private FirebaseAuth auth;
-    private OnItemClickListener mOnItemClickListener;
     private final String TAG = "PatientIndexAdapter";
+    private int position;
+    private Context context;
 
-    public PatientIndexAdapter(List<Patient> patients, OnItemClickListener onItemClickListener) {
+
+    public PatientIndexAdapter(List<Patient> patients, Context context) {
         this.patients = patients;
-        this.mOnItemClickListener = onItemClickListener;
+        this.context = context;
         auth = FirebaseAuth.getInstance();
     }
 
@@ -37,16 +42,24 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_layout, parent, false);
-        return new ViewHolder(view, mOnItemClickListener);
+        return new ViewHolder(view);
     }
 
-    //TODO
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Patient patient = patients.get(position);
 
+        holder.showMessageIndexButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof PractitionerMainActivity) {
+                    ((PractitionerMainActivity) context).goToMessageIndex(patient);
+                }
+            }
+        });
         holder.patientNameTextView.setText(patient.getName());
         holder.patientLastMessageTextView.setText("Jeg tester lige hvad der foregår her");
+
 
     }
 
@@ -60,34 +73,25 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
         return position;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView patientNameTextView;
         TextView patientLastMessageTextView;
+        Button showMessageIndexButton;
         ConstraintLayout patientConstraintLayout;
         MaterialCardView materialCardView;
 
-        OnItemClickListener onItemClickListener;
 
-        public ViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             this.patientNameTextView = itemView.findViewById(R.id.patientNameTextView);
             this.patientLastMessageTextView = itemView.findViewById(R.id.patientLastMessageTextView);
             this.patientConstraintLayout = itemView.findViewById(R.id.patientConstraintLayout);
             this.materialCardView = itemView.findViewById(R.id.patientCardView);
-            this.onItemClickListener = onItemClickListener;
+            this.showMessageIndexButton = itemView.findViewById(R.id.toMessageIndexButton);
 
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            onItemClickListener.onItemClick(getAdapterPosition());
         }
     }
 
-    public interface OnItemClickListener{
-        void onItemClick(int position);
-    }
 }
