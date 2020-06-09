@@ -90,11 +90,12 @@ public class PatientIndexFragment extends Fragment implements Observer, PatientI
 
     /**
      * Denne metode implementeres fra Patientindexadapteren og håndterer hvad der sker når man trykker på knappen i PatientIndexAdapteren.
+     * getParentFragmentManager tager context fra hele activitien og binder sig til denne, det gør at vi kan bruge tilbage knappen i bunden af appen for at komme til PatientIndex
      * @param position tager imod en position fra det objekt der er trykket på i recyclerview
      */
     @Override
     public void onItemClick(int position) {
         Patient patient = patientIndexAdapter.getPatients().get(position);
-        getChildFragmentManager().beginTransaction().replace(R.id.patientIndexConstraintLayout, new MessageIndexFragment(patient)).addToBackStack("patientIndex").commit();
+        getParentFragmentManager().beginTransaction().replace(R.id.patientIndexConstraintLayout, new MessageIndexFragment(patient)).addToBackStack("patientIndex").commit();
     }
 }
