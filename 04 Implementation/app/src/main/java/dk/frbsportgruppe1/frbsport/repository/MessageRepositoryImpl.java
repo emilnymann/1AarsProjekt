@@ -39,6 +39,14 @@ import dk.frbsportgruppe1.frbsport.model.exceptions.MessageIsNullException;
 public class MessageRepositoryImpl implements MessageRepository {
 
     private static final String TAG = "MessageRepository";
+    public static final String MESSAGES = "messages";
+    public static final String DATETIME = "datetime";
+    public static final String PATIENT = "patient";
+    public static final String USERS = "users";
+    public static final String SENDER = "sender";
+    public static final String NAME = "name";
+    public static final String EMAIL = "email";
+    public static final String TEXT = "text";
 
     private final FirebaseFirestore db;
 
@@ -54,19 +62,22 @@ public class MessageRepositoryImpl implements MessageRepository {
         String patientId = messageIndex.getPatient().getId();
         Log.d(TAG, "populateMessageIndex: patient id: " + patientId);
 
-        db.collection("messages")
-                .orderBy("datetime", Query.Direction.ASCENDING)
-                .whereEqualTo("patient", patientId)
+        // TODO: extract strings til konstanter. Refactor > extract > constant
+        db.collection(MESSAGES)
+                .orderBy(DATETIME, Query.Direction.ASCENDING)
+                .whereEqualTo(PATIENT, patientId)
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
-                        db.collection("users").document(documentChange.getDocument().getString("sender")).get().addOnCompleteListener(task -> {
+                        db.collection(USERS).document(documentChange.getDocument().getString(SENDER)).get().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-                                User sender = new UserImpl(task.getResult().getId(), task.getResult().getString("name"), task.getResult().getString("email"));
-                                Message message = new MessageImpl(documentChange.getDocument().getId(),
-                                        documentChange.getDocument().getString("text"),
+                                DocumentSnapshot documentSnapshot = task.getResult();
+                                User sender = new UserImpl(documentSnapshot.getId(), documentSnapshot.getString(NAME), documentSnapshot.getString(EMAIL));
+                                DocumentSnapshot changeSnapshot = documentChange.getDocument();
+                                Message message = new MessageImpl(changeSnapshot.getId(),
+                                        changeSnapshot.getString(TEXT),
                                         sender,
-                                        LocalDateTime.parse(documentChange.getDocument().getString("datetime"), formatter));
+                                        LocalDateTime.parse(changeSnapshot.getString(DATETIME), formatter));
                                 Log.d(TAG, "populateMessageIndex: messagetext: " + message.getText());
 
                                 switch (documentChange.getType()) {
@@ -99,12 +110,12 @@ public class MessageRepositoryImpl implements MessageRepository {
     public void sendMessage(String messageText, User sender) {
 
         Map<String, Object> data = new HashMap<>();
-        data.put("datetime", LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-        data.put("sender", sender.getId());
-        data.put("patient", SessionManager.getInstance().getCurrentUser().getId());
+        data.put(DATETIME, LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        data.put(SENDER, sender.getId());
+        data.put(PATIENT, SessionManager.getInstance().getCurrentUser().getId());
         data.put("text", messageText);
 
-        db.collection("messages").add(data).addOnSuccessListener(documentReference -> {
+        db.collection(MESSAGES).add(data).addOnSuccessListener(documentReference -> {
             Log.d(TAG, "sendMessage: send message success");
         }).addOnFailureListener(e -> {
             Log.d(TAG, "sendMessage: send message fail");
