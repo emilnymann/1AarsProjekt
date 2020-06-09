@@ -27,7 +27,7 @@ public class PractitionerMainActivity extends FragmentActivity implements Bottom
 
         bottomNavigationView = findViewById(R.id.practitionerbottomNavigationView);
         practitionerMainViewPager = findViewById(R.id.practitionerMainViewPager);
-        practitionerMainViewPager.setAdapter(new PractiotionerMainViewPagerAdapter(this));
+        practitionerMainViewPager.setAdapter(new PractitionerMainViewPagerAdapter(this));
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
 

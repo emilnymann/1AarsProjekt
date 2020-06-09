@@ -14,8 +14,6 @@ public class PatientIndexImpl extends Observable implements PatientIndex {
         this.practitioner = practitioner;
     }
 
-
-
     /**
     * @param practitioner er den practicioner patientoversigten er forbundet til.
     * @throws PractitionerIsNullException bliver udløst hvis denne method bilver kaldt unden en practicioner.

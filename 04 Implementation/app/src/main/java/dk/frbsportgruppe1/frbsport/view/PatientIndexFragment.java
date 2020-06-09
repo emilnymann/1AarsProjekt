@@ -37,7 +37,6 @@ public class PatientIndexFragment extends Fragment implements Observer, PatientI
     private static final String TAG = "PatientIndexView";
 
     private PatientIndexViewModel viewModel;
-    private ArrayList<Patient> patients = new ArrayList<>();
     private PatientIndexAdapter patientIndexAdapter;
 
     RecyclerView recyclerViewPatients;

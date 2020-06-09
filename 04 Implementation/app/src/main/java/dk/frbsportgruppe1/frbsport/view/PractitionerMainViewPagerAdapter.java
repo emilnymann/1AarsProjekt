@@ -8,13 +8,13 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 /**
  * Klassen skal håndtere at programmet ikke ændre status når der skiftet activity ved brug af bottomnavigationbar.
  */
-public class PractiotionerMainViewPagerAdapter extends FragmentStateAdapter {
+public class PractitionerMainViewPagerAdapter extends FragmentStateAdapter {
 
     /**
      * Constructor til klassen
      * @param fragmentActivity
      */
-    public PractiotionerMainViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public PractitionerMainViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
