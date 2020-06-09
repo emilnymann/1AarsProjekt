@@ -64,7 +64,6 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Patient patient = patients.get(position);
         holder.patientNameTextView.setText(patient.getName());
-        holder.patientLastMessageTextView.setText("Jeg tester lige hvad der foregår her");
         holder.materialCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +90,6 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
     class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView patientNameTextView;
-        TextView patientLastMessageTextView;
         ConstraintLayout patientConstraintLayout;
         MaterialCardView materialCardView;
 
@@ -100,7 +98,6 @@ public class PatientIndexAdapter extends RecyclerView.Adapter<PatientIndexAdapte
             super(itemView);
 
             this.patientNameTextView = itemView.findViewById(R.id.patientNameTextView);
-            this.patientLastMessageTextView = itemView.findViewById(R.id.patientLastMessageTextView);
             this.patientConstraintLayout = itemView.findViewById(R.id.patientConstraintLayout);
             this.materialCardView = itemView.findViewById(R.id.patientCardView);
         }

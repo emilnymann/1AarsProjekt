@@ -19,7 +19,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent">
@@ -30,35 +30,26 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="24dp"
                     android:gravity="top"
                     android:text="navn"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textStyle="bold">
 
                 </TextView>
-
-                <TextView
-                    android:id="@+id/patientLastMessageTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:gravity="bottom"
-                    android:text="beskedtekst"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2">
+                    android:layout_marginEnd="8dp"
+                    android:background="#e0e0e0">
 
-                </TextView>
+                </View>
+
             </LinearLayout>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
-
     </com.google.android.material.card.MaterialCardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
