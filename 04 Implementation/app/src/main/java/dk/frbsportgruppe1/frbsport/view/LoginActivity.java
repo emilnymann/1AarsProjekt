@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements Observer {
         if (user.getClass() == PatientImpl.class) {
             intent = new Intent(this, PatientMainActivity.class);
         } else if (user.getClass() == PractitionerImpl.class) {
-            Log.d(TAG, "update: logged in practitioner.");
+            intent = new Intent(this, PractitionerMainActivity.class);
         } else {
             Log.d(TAG, "update: logged in: invalid user class");
         }
