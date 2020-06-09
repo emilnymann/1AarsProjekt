@@ -114,7 +114,6 @@ public class MessageIndexFragment extends Fragment implements Observer{
         MessageIndexAdapter messageIndexAdapter = new MessageIndexAdapter(messages);
         recyclerViewMessages.setAdapter(messageIndexAdapter);
         recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
-
         recyclerViewMessages.scrollToPosition(messages.size() - 1);
         messageIndexProgressBar.setVisibility(View.INVISIBLE);
         recyclerViewMessages.setVisibility(View.VISIBLE);
