@@ -1,8 +1,10 @@
 package dk.frbsportgruppe1.frbsport.view;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +37,7 @@ import dk.frbsportgruppe1.frbsport.repository.MessageRepository;
 import dk.frbsportgruppe1.frbsport.repository.MessageRepositoryImpl;
 import dk.frbsportgruppe1.frbsport.viewmodel.MessageIndexViewModel;
 
-public class MessageIndexFragment extends Fragment implements Observer {
+public class MessageIndexFragment extends Fragment implements Observer{
 
     private static final String TAG = "MessageIndexView";
 
@@ -45,23 +47,29 @@ public class MessageIndexFragment extends Fragment implements Observer {
     EditText chatTextInput;
     TextInputLayout chatTextInputLayout;
     ProgressBar messageIndexProgressBar;
+    Patient patient;
 
     public MessageIndexFragment() {
 
     }
 
+    public MessageIndexFragment(Patient patient) {
+        this.patient = patient;
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_messageindex, container, false);
-
         messageIndexProgressBar = rootView.findViewById((R.id.messageIndexProgressBar));
         recyclerViewMessages = rootView.findViewById(R.id.messageRecyclerView);
         chatTextInput = rootView.findViewById(R.id.chatTextInputTextField);
         chatTextInputLayout = rootView.findViewById(R.id.chatTextInputLayout);
 
         try {
-            final Patient patient = (Patient)SessionManager.getInstance().getCurrentUser();
+            if (patient == null) {
+                patient = (Patient)SessionManager.getInstance().getCurrentUser();
+            }
             final MessageIndexImpl messageIndex = new MessageIndexImpl(patient);
 
             viewModel = new MessageIndexViewModel(messageIndex);
@@ -74,7 +82,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                     if (actionId == EditorInfo.IME_ACTION_SEND) {
-                        messageRepository.sendMessage(v.getText().toString(), patient);
+                        messageRepository.sendMessage(v.getText().toString(), SessionManager.getInstance().getCurrentUser(), patient);
                         v.setText("");
                         return true;
                     }
@@ -85,7 +93,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
             chatTextInputLayout.setEndIconOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    messageRepository.sendMessage(chatTextInput.getText().toString(), patient);
+                    messageRepository.sendMessage(chatTextInput.getText().toString(), SessionManager.getInstance().getCurrentUser(), patient);
                     chatTextInput.setText("");
                 }
             });
@@ -93,6 +101,7 @@ public class MessageIndexFragment extends Fragment implements Observer {
         } catch (PatientIsNullException e) {
             Log.d(TAG, "onCreateView: " + e.getMessage());
         }
+
 
         return rootView;
 
@@ -105,7 +114,6 @@ public class MessageIndexFragment extends Fragment implements Observer {
         MessageIndexAdapter messageIndexAdapter = new MessageIndexAdapter(messages);
         recyclerViewMessages.setAdapter(messageIndexAdapter);
         recyclerViewMessages.setLayoutManager(new LinearLayoutManager(getContext()));
-
         recyclerViewMessages.scrollToPosition(messages.size() - 1);
         messageIndexProgressBar.setVisibility(View.INVISIBLE);
         recyclerViewMessages.setVisibility(View.VISIBLE);
