@@ -24,14 +24,18 @@ public class CalendarViewModel extends Observable implements Observer {
         return workoutplans;
     }
 
-
+/*
+Constructor til viewmodel af calendar
+ */
     public CalendarViewModel(Observable calendar) {
         eventDayList = new ArrayList<>();
         workoutplans = new ArrayList<>();
         calendar.addObserver(this);
 
     }
-
+/*
+Tilmelder observere til viewmodel af calendar.
+ */
     @Override
     public void update(Observable o, Object arg) {
         Calendar calendar = (Calendar) arg;

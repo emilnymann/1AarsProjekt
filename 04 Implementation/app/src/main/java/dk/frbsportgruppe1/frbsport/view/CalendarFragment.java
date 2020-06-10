@@ -43,9 +43,14 @@ public class CalendarFragment extends Fragment implements Observer{
     public CalendarFragment(){
         // Required empty public constructor
     }
-
+    /*
+    Opretter viewet til kalenderen og fylder det ud med behandlinger,
+    træningspas og træningsprogrammer. Vi visualiserer behandlinger og træningspas med chips,
+    som kan vælges til eller fra.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        //TODO: fix implementering så vi ser kalenderen uden at trykke på chips
         fragmentView =inflater.inflate(R.layout.fragment_calendar, container, false);
         cv= fragmentView.findViewById(R.id.calendarView);
         Chip chipWorkout= fragmentView.findViewById(R.id.chip2);
@@ -58,7 +63,7 @@ public class CalendarFragment extends Fragment implements Observer{
         calendarViewModel.addObserver(this);
         CalendarRepositoryImpl calendarRepository=new CalendarRepositoryImpl();
         calendarRepository.populateCalendar(calendar);
-
+        // TODO: opret forbindelse til API i stedet for dummy data
         ArrayList<Workoutplan> workoutplans = new ArrayList<>();
         workoutplans.add(new WorkoutplanImpl("Rygøvelser"));
         workoutplans.add(new WorkoutplanImpl("Hofter og knæ"));
@@ -91,12 +96,12 @@ public class CalendarFragment extends Fragment implements Observer{
         }
         cv.setEvents(eventDayList);
 
-        try{
-            calendar.filter("Workout");
-            calendar.filter("Workout");
-        }catch(FilterTypeIsNullException e){
-            e.printStackTrace();
-        }
+//        try{
+//            calendar.filter("Workout");
+//            calendar.filter("Workout");
+//        }catch(FilterTypeIsNullException e){
+//            e.printStackTrace();
+//        }
         return fragmentView;
     }
 
