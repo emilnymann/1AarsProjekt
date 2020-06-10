@@ -8,11 +8,12 @@ public class CalendarRepositoryImpl implements CalendarRepository{
     private boolean isWorkoutOn=true;
 
     public void populateCalendar(Calendar calendar){
-        //Midertidlig data
+        //Midlertidig data fordi vi ikke kan bruge API
         calendar.addEvent("Ben øvelser","Workout",2020,5,9);
         calendar.addEvent("Højre arm","Workout",2020,5,10);
         calendar.addEvent("Behandling 45 min.","Booking",2020,5,10,10,00);
         calendar.addEvent("Behandling 60 min.","Booking",2020,5,12,11,00);
+
     }
 
     public void filter(String type) throws FilterTypeIsNullException {

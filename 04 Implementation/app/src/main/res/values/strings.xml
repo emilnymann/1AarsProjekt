@@ -4,7 +4,8 @@
     <string name="menu_kalender">Kalender</string>
     <string name="textinput_hint_besked">Besked</string>
     <string name="menu_booking">Booking</string>
-
+    <string name="Træningsprogrammer">Træningsprogrammer</string>
+    <string name="rygoevelser">Rygøvelser</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="string_behandling">Behandling</string>
@@ -13,4 +14,5 @@
     <string name="string_email">E-mail</string>
     <string name="string_adgangskode">Adgangskode</string>
     <string name="string_login">Login</string>
+
 </resources>
