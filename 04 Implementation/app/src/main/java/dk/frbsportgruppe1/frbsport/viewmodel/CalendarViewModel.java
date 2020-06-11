@@ -10,21 +10,36 @@ import java.util.Observer;
 
 import dk.frbsportgruppe1.frbsport.R;
 import dk.frbsportgruppe1.frbsport.model.Calendar;
+import dk.frbsportgruppe1.frbsport.model.Workoutplan;
+import dk.frbsportgruppe1.frbsport.model.WorkoutplanImpl;
 
 public class CalendarViewModel extends Observable implements Observer {
     private static final String TAG = "Calendar";
 
     private ArrayList<EventDay> eventDayList;
 
-    public CalendarViewModel(Observable calendar) {
-        eventDayList = new ArrayList<>();
-        calendar.addObserver(this);
+    private ArrayList<WorkoutplanImpl> workoutplans;
+
+    public ArrayList<WorkoutplanImpl> getWorkoutplans() {
+        return workoutplans;
     }
 
+/*
+Constructor til viewmodel af calendar
+ */
+    public CalendarViewModel(Observable calendar) {
+        eventDayList = new ArrayList<>();
+        workoutplans = new ArrayList<>();
+        calendar.addObserver(this);
+
+    }
+/*
+Tilmelder observere til viewmodel af calendar.
+ */
     @Override
     public void update(Observable o, Object arg) {
         Calendar calendar = (Calendar) arg;
-
+        workoutplans = new ArrayList<>();
         eventDayList = new ArrayList<>();
 
         for (int i = 0; i < calendar.getEvents().size(); i++) {
@@ -73,4 +88,6 @@ public class CalendarViewModel extends Observable implements Observer {
     public ArrayList<EventDay> getEventDayList() {
         return eventDayList;
     }
+
+
 }
