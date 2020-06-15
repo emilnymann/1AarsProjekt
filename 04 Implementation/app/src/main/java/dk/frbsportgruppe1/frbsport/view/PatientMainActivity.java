@@ -26,6 +26,22 @@ public class PatientMainActivity extends FragmentActivity implements BottomNavig
         patientMainViewPager = findViewById(R.id.patientMainViewPager);
         patientMainViewPager.setAdapter(new PatientMainViewPagerAdapter(this));
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        patientMainViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+
+            @Override
+            public void onPageSelected(int position) {
+//              super.onPageSelected(position);
+                MenuItem prevMenuItem = bottomNavigationView.getMenu().getItem(position);
+                if (prevMenuItem != null) {
+                    prevMenuItem.setChecked(false);
+                } else {
+                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
+                }
+
+                bottomNavigationView.getMenu().getItem(position).setChecked(true);
+            }
+        });
     }
 
     /**
