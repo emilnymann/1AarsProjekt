@@ -29,6 +29,20 @@ public class PractitionerMainActivity extends FragmentActivity implements Bottom
         practitionerMainViewPager = findViewById(R.id.practitionerMainViewPager);
         practitionerMainViewPager.setAdapter(new PractitionerMainViewPagerAdapter(this));
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        practitionerMainViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                MenuItem prevMenuItem = bottomNavigationView.getMenu().getItem(position);
+                if (prevMenuItem != null) {
+                    prevMenuItem.setChecked(false);
+                } else {
+                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
+                }
+
+                bottomNavigationView.getMenu().getItem(position).setChecked(true);
+            }
+        });
     }
 
     /**
