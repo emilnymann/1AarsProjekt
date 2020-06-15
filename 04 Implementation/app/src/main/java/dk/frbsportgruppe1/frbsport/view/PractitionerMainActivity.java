@@ -55,13 +55,13 @@ public class PractitionerMainActivity extends FragmentActivity implements Bottom
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (bottomNavigationView.getSelectedItemId() != item.getItemId()) {
             switch (item.getItemId()) {
-                case R.id.menuitem_beskeder:
+                case R.id.practitioner_menuitem_beskeder:
                     practitionerMainViewPager.setCurrentItem(0);
                     return true;
-                case R.id.menuitem_booking:
+                case R.id.menuitem_placeholder:
                     practitionerMainViewPager.setCurrentItem(1);
                     return true;
-                case R.id.menuitem_kalender:
+                case R.id.practitioner_menuitem_bookingkalender:
                     practitionerMainViewPager.setCurrentItem(2);
                     return true;
                 default:

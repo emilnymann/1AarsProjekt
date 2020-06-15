@@ -30,9 +30,9 @@ public class PractitionerMainViewPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return new PatientIndexFragment();
             case 1:
-                return new BookingFragment();
+                return new PractitionerBookingFragment();
             case 2:
-                return new CalendarFragment();
+                return new PractitionerBookingFragment();
             default:
                 return null;
         }
