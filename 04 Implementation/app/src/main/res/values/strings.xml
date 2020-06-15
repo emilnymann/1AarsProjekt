@@ -16,5 +16,7 @@
     <string name="string_login">Login</string>
     <string name="string_set_available_hours">Angiv ledige tider</string>
     <string name="menu_bookingkalender">Bookingkalender</string>
+    <string name="string_available_hours">Ledige tider</string>
+    <string name="string_exceptions">Undtagelser</string>
 
 </resources>

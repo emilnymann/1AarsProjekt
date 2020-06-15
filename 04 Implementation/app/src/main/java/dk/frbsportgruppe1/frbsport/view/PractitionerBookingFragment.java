@@ -2,7 +2,6 @@ package dk.frbsportgruppe1.frbsport.view;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -29,8 +28,7 @@ public class PractitionerBookingFragment extends Fragment {
         setAvailableHoursButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new SetAvailableHoursDialogFragment();
-                newFragment.show(getParentFragmentManager(), "setAvailableHours");
+                getParentFragmentManager().beginTransaction().replace(R.id.practitionerBookingConstraintLayout, new SetAvailableHoursFragment()).addToBackStack("PractitionerBookingFragment").commit();
             }
         });
 
