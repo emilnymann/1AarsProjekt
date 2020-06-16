@@ -8,6 +8,12 @@ public class BookingRangeIndexImpl extends Observable implements BookingRangeInd
     private ArrayList<BookingExceptionRange> bookingExceptionRanges;
     private Practitioner practitioner;
 
+    public BookingRangeIndexImpl(Practitioner practitioner) {
+        this.bookingRanges = new ArrayList<>();
+        this.bookingExceptionRanges = new ArrayList<>();
+        this.practitioner = practitioner;
+    }
+
     @Override
     public ArrayList<BookingRange> getBookingRanges() {
         return bookingRanges;

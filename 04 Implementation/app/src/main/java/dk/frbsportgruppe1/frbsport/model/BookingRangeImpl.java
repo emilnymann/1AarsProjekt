@@ -24,7 +24,6 @@ public class BookingRangeImpl implements BookingRange{
     @Override
     public void setDayOfWeek(DayOfWeek dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
-
     }
 
     @Override

@@ -3,16 +3,21 @@ package dk.frbsportgruppe1.frbsport.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import dk.frbsportgruppe1.frbsport.R;
+import dk.frbsportgruppe1.frbsport.model.BookingExceptionRange;
+import dk.frbsportgruppe1.frbsport.model.BookingRange;
 import dk.frbsportgruppe1.frbsport.model.BookingRangeIndex;
 import dk.frbsportgruppe1.frbsport.model.BookingRangeIndexImpl;
 import dk.frbsportgruppe1.frbsport.model.Practitioner;
@@ -23,9 +28,11 @@ import dk.frbsportgruppe1.frbsport.viewmodel.BookingCalenderViewModel;
 
 
 public class SetAvailableHoursFragment extends Fragment implements Observer {
+    private static final String TAG = "SetAvailableHoursFragment";
     RecyclerView recyclerViewAvailableHours;
     RecyclerView recyclerViewUnavailableHours;
     BookingCalenderViewModel bookingCalenderViewModel;
+
 
 
     public SetAvailableHoursFragment() {
@@ -41,9 +48,9 @@ public class SetAvailableHoursFragment extends Fragment implements Observer {
 
 
         Practitioner practitioner = (Practitioner) SessionManager.getInstance().getCurrentUser();
-        BookingRangeIndexImpl bookingRangeIndex = new BookingRangeIndexImpl();
-        bookingRangeIndex.setPractitioner(practitioner);
+        BookingRangeIndexImpl bookingRangeIndex = new BookingRangeIndexImpl(practitioner);
         bookingCalenderViewModel = new BookingCalenderViewModel(bookingRangeIndex);
+        bookingCalenderViewModel.addObserver(this);
 
         BookingRangeRepository bookingRangeRepository = new BookingRangeRepositoryImpl();
         bookingRangeRepository.populateBookingRangeIndex(bookingRangeIndex);
@@ -53,8 +60,14 @@ public class SetAvailableHoursFragment extends Fragment implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        SetAvailableHoursAdapter setAvailableHoursAdapter= new SetAvailableHoursAdapter();
-        SetUnavailableHoursAdapter setUnavailableHoursAdapter = new SetUnavailableHoursAdapter();
+        recyclerViewAvailableHours.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewUnavailableHours.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        ArrayList<BookingRange> bookingRanges = bookingCalenderViewModel.getBookingRanges();
+        ArrayList<BookingExceptionRange> bookingExceptionRanges = bookingCalenderViewModel.getBookingExceptionRanges();
+        SetAvailableHoursAdapter setAvailableHoursAdapter = new SetAvailableHoursAdapter(bookingRanges);
+        SetUnavailableHoursAdapter setUnavailableHoursAdapter = new SetUnavailableHoursAdapter(bookingExceptionRanges);
+        Log.d(TAG, "update: bookingRanges size: " + bookingRanges.size());
 
         recyclerViewAvailableHours.setAdapter(setAvailableHoursAdapter);
         recyclerViewUnavailableHours.setAdapter(setUnavailableHoursAdapter);

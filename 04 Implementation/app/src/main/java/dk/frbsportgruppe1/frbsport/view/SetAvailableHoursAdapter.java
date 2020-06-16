@@ -6,42 +6,54 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.card.MaterialCardView;
+import org.apache.commons.lang3.StringUtils;
+
+import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.Locale;
 
 import dk.frbsportgruppe1.frbsport.R;
+import dk.frbsportgruppe1.frbsport.model.BookingRange;
 
 public class SetAvailableHoursAdapter extends  RecyclerView.Adapter<SetAvailableHoursAdapter.ViewHolder>{
-    // TODO: Fix adapteren til at tage imod data (BookingRange)
+    private ArrayList<BookingRange> bookingRanges;
 
-    public SetAvailableHoursAdapter() {
-
+    public SetAvailableHoursAdapter(ArrayList<BookingRange> bookingRanges) {
+        this.bookingRanges = bookingRanges;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tider_layout, parent);
-        return new ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tider_layout, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.dagTextView.setText("NEJ HVOR ER DET MANDAG I DAG VAR!?");
-        holder.tidspunktTextView.setText("8:00 - 17:00");
+        BookingRange bookingRange = bookingRanges.get(position);
+        String dagTextViewString = bookingRange.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
+        holder.dagTextView.setText(StringUtils.capitalize(dagTextViewString));
+        holder.tidspunktTextView.setText(bookingRange.getStartTime().toString() + " - " + bookingRange.getEndTime().toString());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return bookingRanges.size();
     }
 
+    public ArrayList<BookingRange> getBookingRanges() {
+        return bookingRanges;
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView dagTextView;
         TextView tidspunktTextView;
-        MaterialCardView angivLedigeTiderCardView;
+        CardView angivLedigeTiderCardView;
 
 
         public ViewHolder(@NonNull View itemView) {

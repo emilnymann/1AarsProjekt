@@ -1,5 +1,7 @@
 package dk.frbsportgruppe1.frbsport.viewmodel;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -32,6 +34,7 @@ public class BookingCalenderViewModel extends Observable implements Observer {
         BookingRangeIndex bookingRangeIndex = (BookingRangeIndex) arg;
         bookingRanges = bookingRangeIndex.getBookingRanges();
         bookingExceptionRanges = bookingRangeIndex.getBookingExceptionRanges();
+        Log.d(TAG, "update: bookingranges size" + bookingRanges.size());
         setChanged();
         notifyObservers();
 
