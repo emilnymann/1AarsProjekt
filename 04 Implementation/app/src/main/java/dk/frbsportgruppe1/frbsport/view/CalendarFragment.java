@@ -102,7 +102,7 @@ public class CalendarFragment extends Fragment implements Observer{
 
         //Tvinger en opdatering af calendarView lige efter
         //fragmentView er blevet tegnet, for at calendarView
-        //bliver tegnet ved korrekt.
+        //bliver tegnet korrekt.
         new Handler().postDelayed(() -> {
             try {
                 calendar.filter("Workout");
