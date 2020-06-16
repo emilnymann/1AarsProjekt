@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,6 +21,7 @@ import dk.frbsportgruppe1.frbsport.R;
 
 public class AddAvailableTimeFragment extends Fragment {
     AutoCompleteTextView autoCompleteTextView;
+    Button button;
 
 
     public AddAvailableTimeFragment() {
@@ -29,6 +31,7 @@ public class AddAvailableTimeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add_available_time, container, false);
+        button = rootView.findViewById(R.id.addAvailableTimeAcceptButton);
         ArrayList<String> daysOfWeekList = new ArrayList<>();
         
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
@@ -38,6 +41,13 @@ public class AddAvailableTimeFragment extends Fragment {
 
         autoCompleteTextView = rootView.findViewById(R.id.addAvailableTimeAutoCompleteTextView);
         autoCompleteTextView.setAdapter(adapter);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         
         return rootView;
     }

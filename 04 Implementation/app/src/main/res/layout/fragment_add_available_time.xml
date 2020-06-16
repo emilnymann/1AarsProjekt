@@ -42,6 +42,7 @@
         app:startIconDrawable="@drawable/ic_baseline_access_time_24">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/startTimeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/string_time_picker_start_time"
@@ -61,6 +62,7 @@
         app:startIconDrawable="@drawable/ic_baseline_access_time_24">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/endTimeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/string_time_picker_end_time"
