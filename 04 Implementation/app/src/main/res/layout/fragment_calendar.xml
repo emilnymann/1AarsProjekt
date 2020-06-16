@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/calendarConstraintLayout"
@@ -9,65 +8,66 @@
     android:background="@color/design_default_color_background"
     android:orientation="vertical"
     tools:context=".view.CalendarFragment">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
-    <com.applandeo.materialcalendarview.CalendarView
-        android:id="@+id/calendarView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:eventsEnabled="true"
-        />
+        android:orientation="vertical">
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipgroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp">
+        <com.applandeo.materialcalendarview.CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:eventsEnabled="true" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip2"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipgroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checkable="true"
-            android:checked="true"
-            android:text="@string/string_behandling"
-            app:checkedIconVisible="false"
-            app:chipBackgroundColor="@color/bg_chip_state_list_primary" />
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip3"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="true"
+                android:text="@string/string_behandling"
+                app:checkedIconVisible="false"
+                app:chipBackgroundColor="@color/bg_chip_state_list_primary" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="true"
+                android:text="@string/string_traening"
+                app:checkedIconVisible="false"
+                app:chipBackgroundColor="@color/bg_chip_state_list_accent" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/workoutplanHeadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checkable="true"
-            android:checked="true"
-            android:text="@string/string_traening"
-            app:checkedIconVisible="false"
-            app:chipBackgroundColor="@color/bg_chip_state_list_accent" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/Træningsprogrammer"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
-    </com.google.android.material.chip.ChipGroup>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/workoutplanRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:nestedScrollingEnabled="true">
 
-    <TextView
-        android:id="@+id/workoutplanHeadline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/Træningsprogrammer"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/workoutplanRecyclerView"
-        android:nestedScrollingEnabled="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp">
-
-    </androidx.recyclerview.widget.RecyclerView>
-</LinearLayout>
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>
