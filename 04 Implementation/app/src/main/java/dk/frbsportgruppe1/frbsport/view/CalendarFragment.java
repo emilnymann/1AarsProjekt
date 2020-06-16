@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,9 +51,8 @@ public class CalendarFragment extends Fragment implements Observer{
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        //TODO: fix implementering så vi ser kalenderen uden at trykke på chips
         fragmentView =inflater.inflate(R.layout.fragment_calendar, container, false);
-        cv= fragmentView.findViewById(R.id.calendarView);
+        cv = fragmentView.findViewById(R.id.calendarView);
         Chip chipWorkout= fragmentView.findViewById(R.id.chip2);
         Chip chipBooking= fragmentView.findViewById(R.id.chip3);
         textView = fragmentView.findViewById(R.id.workoutplanHeadline);
@@ -63,16 +63,19 @@ public class CalendarFragment extends Fragment implements Observer{
         calendarViewModel.addObserver(this);
         CalendarRepositoryImpl calendarRepository=new CalendarRepositoryImpl();
         calendarRepository.populateCalendar(calendar);
+
         // TODO: opret forbindelse til API i stedet for dummy data
         ArrayList<Workoutplan> workoutplans = new ArrayList<>();
         workoutplans.add(new WorkoutplanImpl("Rygøvelser"));
         workoutplans.add(new WorkoutplanImpl("Hofter og knæ"));
         workoutplans.add(new WorkoutplanImpl("Knæ og tå"));
+
         Log.d(TAG, "onCreateView: " + workoutplans.size());
         workoutplanAdapter = new WorkoutplanAdapter(this.getContext(), workoutplans);
         rw.setAdapter(workoutplanAdapter);
         rw.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        //Tilføjer hvad der skal ske ved klik på knappen træning
         chipWorkout.setOnClickListener(view->{
             try{
                 calendar.filter("Workout");
@@ -81,6 +84,7 @@ public class CalendarFragment extends Fragment implements Observer{
             }
         });
 
+        //Tilføjer hvad der skal ske ved klik på knappen behandlinger
         chipBooking.setOnClickListener(view->{
             try{
                 calendar.filter("Booking");
@@ -96,18 +100,23 @@ public class CalendarFragment extends Fragment implements Observer{
         }
         cv.setEvents(eventDayList);
 
-//        try{
-//            calendar.filter("Workout");
-//            calendar.filter("Workout");
-//        }catch(FilterTypeIsNullException e){
-//            e.printStackTrace();
-//        }
+        //Tvinger en opdatering af calendarView lige efter
+        //fragmentView er blevet tegnet, for at calendarView
+        //bliver tegnet korrekt.
+        new Handler().postDelayed(() -> {
+            try {
+                calendar.filter("Workout");
+                calendar.filter("Workout");
+            } catch (FilterTypeIsNullException e){
+                e.printStackTrace();
+            }
+        },5);
+
         return fragmentView;
     }
 
     @Override
     public void update(Observable o,Object arg){
         cv.setEvents(calendarViewModel.getEventDayList());
-
     }
 }
