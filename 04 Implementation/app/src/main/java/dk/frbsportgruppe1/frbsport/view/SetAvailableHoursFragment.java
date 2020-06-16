@@ -1,5 +1,7 @@
 package dk.frbsportgruppe1.frbsport.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -31,7 +36,9 @@ public class SetAvailableHoursFragment extends Fragment implements Observer {
     private static final String TAG = "SetAvailableHoursFragment";
     RecyclerView recyclerViewAvailableHours;
     RecyclerView recyclerViewUnavailableHours;
+    FloatingActionButton button;
     BookingCalenderViewModel bookingCalenderViewModel;
+
 
 
 
@@ -45,7 +52,30 @@ public class SetAvailableHoursFragment extends Fragment implements Observer {
         View rootView = inflater.inflate(R.layout.fragment_set_available_time, container, false);
         recyclerViewAvailableHours = rootView.findViewById(R.id.ledigeTiderRecyclerView);
         recyclerViewUnavailableHours = rootView.findViewById(R.id.undtagelserRecyclerView);
-
+        button = rootView.findViewById(R.id.addTimeButton);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Opret")
+                .setItems(R.array.add_time_choice_array, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                getParentFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.setAvailableHoursConstraintLayout, new AddAvailableTimeFragment())
+                                        .addToBackStack("setAvailableHoursConstraintLayout")
+                                        .commit();
+                                break;
+                            case 1:
+                                // TODO her skal den skifte til opret undtagelse
+                                break;
+                            default:
+                                // TODO wat?
+                                break;
+                        }
+                    }
+                });
+        AlertDialog dialog = builder.create();
 
         Practitioner practitioner = (Practitioner) SessionManager.getInstance().getCurrentUser();
         BookingRangeIndexImpl bookingRangeIndex = new BookingRangeIndexImpl(practitioner);
@@ -54,6 +84,14 @@ public class SetAvailableHoursFragment extends Fragment implements Observer {
 
         BookingRangeRepository bookingRangeRepository = new BookingRangeRepositoryImpl();
         bookingRangeRepository.populateBookingRangeIndex(bookingRangeIndex);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
+
 
         return rootView;
     }
