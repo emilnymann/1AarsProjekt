@@ -33,6 +33,12 @@
                 android:text="@string/string_available_hours"
                  />
 
+            <ProgressBar
+                android:id="@+id/setAvailableHoursProgressBar1"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ledigeTiderRecyclerView"
                 android:layout_width="match_parent"
@@ -41,7 +47,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:nestedScrollingEnabled="false"
-                />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -53,6 +59,12 @@
                 android:text="@string/string_exceptions"
                 />
 
+            <ProgressBar
+                android:id="@+id/setAvailableHoursProgressBar2"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/undtagelserRecyclerView"
                 android:layout_width="match_parent"
@@ -61,7 +73,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:nestedScrollingEnabled="false"
-                />
+                android:visibility="gone" />
 
         </LinearLayout>
 

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,6 +36,8 @@ public class SetAvailableHoursFragment extends Fragment implements Observer {
     private static final String TAG = "SetAvailableHoursFragment";
     RecyclerView recyclerViewAvailableHours;
     RecyclerView recyclerViewUnavailableHours;
+    ProgressBar progressBar1;
+    ProgressBar progressBar2;
     FloatingActionButton button;
     BookingCalenderViewModel bookingCalenderViewModel;
 
@@ -48,9 +51,11 @@ public class SetAvailableHoursFragment extends Fragment implements Observer {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_set_available_time, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_set_available_hours, container, false);
         recyclerViewAvailableHours = rootView.findViewById(R.id.ledigeTiderRecyclerView);
         recyclerViewUnavailableHours = rootView.findViewById(R.id.undtagelserRecyclerView);
+        progressBar1 = rootView.findViewById(R.id.setAvailableHoursProgressBar1);
+        progressBar2 = rootView.findViewById(R.id.setAvailableHoursProgressBar2);
         button = rootView.findViewById(R.id.addTimeButton);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Opret")
@@ -105,7 +110,19 @@ public class SetAvailableHoursFragment extends Fragment implements Observer {
         recyclerViewUnavailableHours.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ArrayList<BookingRange> bookingRanges = bookingCalenderViewModel.getBookingRanges();
+
+        if (bookingRanges.size() > 0) {
+            progressBar1.setVisibility(View.GONE);
+            recyclerViewAvailableHours.setVisibility(View.VISIBLE);
+        }
+
         ArrayList<BookingExceptionRange> bookingExceptionRanges = bookingCalenderViewModel.getBookingExceptionRanges();
+
+        if (bookingExceptionRanges.size() > 0) {
+            progressBar2.setVisibility(View.GONE);
+            recyclerViewUnavailableHours.setVisibility(View.VISIBLE);
+        }
+
         SetAvailableHoursAdapter setAvailableHoursAdapter = new SetAvailableHoursAdapter(bookingRanges);
         SetUnavailableHoursAdapter setUnavailableHoursAdapter = new SetUnavailableHoursAdapter(bookingExceptionRanges);
         Log.d(TAG, "update: bookingRanges size: " + bookingRanges.size());
