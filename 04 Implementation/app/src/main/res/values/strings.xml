@@ -22,6 +22,8 @@
     <string name="string_time_picker_start_time">Start-tid</string>
     <string name="string_time_picker_end_time">Slut-tid</string>
     <string name="string_confirm">Bekræft</string>
+    <string name="string_start_date">Start-dato</string>
+    <string name="string_end_date">Slut-dato</string>
     <string-array name="add_time_choice_array">
         <item>Ledig tid</item>
         <item>Undtagelse</item>

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import dk.frbsportgruppe1.frbsport.AddUnavailableHoursFragment;
 import dk.frbsportgruppe1.frbsport.R;
 import dk.frbsportgruppe1.frbsport.model.BookingExceptionRange;
 import dk.frbsportgruppe1.frbsport.model.BookingRange;
@@ -65,7 +66,11 @@ public class SetAvailableHoursFragment extends Fragment implements Observer {
                                         .commit();
                                 break;
                             case 1:
-                                // TODO her skal den skifte til opret undtagelse
+                                getParentFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.setAvailableHoursConstraintLayout, new AddUnavailableHoursFragment())
+                                        .addToBackStack("setAvailableHoursConstraintLayout")
+                                        .commit();
                                 break;
                             default:
                                 // TODO wat?

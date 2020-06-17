@@ -95,6 +95,13 @@ public class BookingRangeRepositoryImpl extends Observable implements BookingRan
                 });
     }
 
+    /**
+     * INdsæt en ny ledig tid i Firestore
+     * @param dayOfWeek en integer der angiver udedagen. 1 = mandag, 7 = søndag.
+     * @param startTime starttidspunktet for det ledige tidsinterval
+     * @param endTime sluttidspunktet for det ledige tidsinterval
+     * @param practitioner den behandler som den ledige tid tilhører
+     */
     @Override
     public void createBookingRange(int dayOfWeek, LocalTime startTime, LocalTime endTime, Practitioner practitioner) {
 
@@ -116,6 +123,31 @@ public class BookingRangeRepositoryImpl extends Observable implements BookingRan
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "onFailure: booking range add failed");
+            }
+        });
+
+    }
+
+    @Override
+    public void createBookingRangeException(LocalDateTime startDateTime, LocalDateTime endDateTime, Practitioner practitioner) {
+
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("start_date_time", startDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        data.put("end_date_time", endDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        data.put("practitioner", practitioner.getId());
+
+        db.collection(BOOKING_EXCEPTION_RANGES).add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Log.d(TAG, "onSuccess: booking range exception added with id " + documentReference.getId());
+                setChanged();
+                notifyObservers();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: booking range exception add failed");
             }
         });
 

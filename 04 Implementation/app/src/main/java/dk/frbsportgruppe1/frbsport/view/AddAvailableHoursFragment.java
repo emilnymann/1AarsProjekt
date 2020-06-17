@@ -101,6 +101,7 @@ public class AddAvailableHoursFragment extends Fragment implements Observer {
             }
         });
 
+        // TODO: disable knap når alle felter ikke er udfyldt
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
