@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -23,7 +22,6 @@ import java.util.Observer;
 import dk.frbsportgruppe1.frbsport.R;
 import dk.frbsportgruppe1.frbsport.model.BookingExceptionRange;
 import dk.frbsportgruppe1.frbsport.model.BookingRange;
-import dk.frbsportgruppe1.frbsport.model.BookingRangeIndex;
 import dk.frbsportgruppe1.frbsport.model.BookingRangeIndexImpl;
 import dk.frbsportgruppe1.frbsport.model.Practitioner;
 import dk.frbsportgruppe1.frbsport.model.SessionManager;
@@ -62,7 +60,7 @@ public class SetAvailableHoursFragment extends Fragment implements Observer {
                             case 0:
                                 getParentFragmentManager()
                                         .beginTransaction()
-                                        .replace(R.id.setAvailableHoursConstraintLayout, new AddAvailableTimeFragment())
+                                        .replace(R.id.setAvailableHoursConstraintLayout, new AddAvailableHoursFragment())
                                         .addToBackStack("setAvailableHoursConstraintLayout")
                                         .commit();
                                 break;
