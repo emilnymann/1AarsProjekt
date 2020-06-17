@@ -14,5 +14,16 @@
     <string name="string_email">E-mail</string>
     <string name="string_adgangskode">Adgangskode</string>
     <string name="string_login">Login</string>
+    <string name="string_set_available_hours">Angiv ledige tider</string>
+    <string name="menu_bookingkalender">Bookingkalender</string>
+    <string name="string_available_hours">Ledige tider</string>
+    <string name="string_exceptions">Undtagelser</string>
+    <string name="string_choose_weekday">Vælg dag</string>
+    <string name="string_time_picker_start_time">Start-tid</string>
+    <string name="string_time_picker_end_time">Slut-tid</string>
+    <string-array name="add_time_choice_array">
+        <item>Ledig tid</item>
+        <item>Undtagelse</item>
+    </string-array>
 
 </resources>

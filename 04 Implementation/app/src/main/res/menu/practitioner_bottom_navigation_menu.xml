@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/practitioner_menuitem_beskeder"
+        android:icon="@drawable/ic_chat_black_24dp"
+        android:title="@string/menu_beskeder" />
+    <item
+        android:id="@+id/menuitem_placeholder"
+        android:icon="@drawable/ic_book_black_24dp"
+        android:title="placeholder" />
+    <item
+        android:id="@+id/practitioner_menuitem_bookingkalender"
+        android:icon="@drawable/ic_event_black_24dp"
+        android:title="@string/menu_bookingkalender" />
+</menu>
