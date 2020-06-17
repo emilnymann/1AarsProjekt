@@ -7,5 +7,7 @@ public interface Workoutplan {
      */
     public String getTitle();
     public void setTitle(String title);
+    public Patient getPatient();
+    void setPatient(Patient patient);
 
 }

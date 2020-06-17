@@ -8,6 +8,8 @@ public class WorkoutplanImpl extends Observable implements Workoutplan {
     disse sætter så ind i de getter og setters som vi overrider.
      */
     private String title;
+    private Patient patient;
+
     /*
     Constructor til at oprette en træningsplan
      */
@@ -23,5 +25,15 @@ public class WorkoutplanImpl extends Observable implements Workoutplan {
     @Override
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public Patient getPatient() {
+        return patient;
+    }
+
+    @Override
+    public void setPatient(Patient patient ) {
+        this.patient = patient;
     }
 }
