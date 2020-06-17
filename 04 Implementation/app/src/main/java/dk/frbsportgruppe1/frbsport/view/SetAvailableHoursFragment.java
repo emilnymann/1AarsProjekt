@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import dk.frbsportgruppe1.frbsport.AddUnavailableHoursFragment;
 import dk.frbsportgruppe1.frbsport.R;
 import dk.frbsportgruppe1.frbsport.model.BookingExceptionRange;
 import dk.frbsportgruppe1.frbsport.model.BookingRange;

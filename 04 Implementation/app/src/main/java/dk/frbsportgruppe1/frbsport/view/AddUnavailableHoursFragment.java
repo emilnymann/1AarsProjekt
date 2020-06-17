@@ -1,4 +1,4 @@
-package dk.frbsportgruppe1.frbsport;
+package dk.frbsportgruppe1.frbsport.view;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
 
+import dk.frbsportgruppe1.frbsport.R;
 import dk.frbsportgruppe1.frbsport.model.Practitioner;
 import dk.frbsportgruppe1.frbsport.model.SessionManager;
 import dk.frbsportgruppe1.frbsport.repository.BookingRangeRepository;
@@ -61,7 +62,7 @@ public class AddUnavailableHoursFragment extends Fragment implements Observer {
                 DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        LocalDate localDate = LocalDate.of(year + 1, month + 1, dayOfMonth + 1);
+                        LocalDate localDate = LocalDate.of(year, month + 1, dayOfMonth);
                         startDateInput.setText(localDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
                     }
                 }, 2020, 1, 1);
@@ -89,7 +90,7 @@ public class AddUnavailableHoursFragment extends Fragment implements Observer {
                 DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        LocalDate localDate = LocalDate.of(year + 1, month + 1, dayOfMonth + 1);
+                        LocalDate localDate = LocalDate.of(year, month + 1, dayOfMonth);
                         endDateInput.setText(localDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
                     }
                 }, 2020, 1, 1);
